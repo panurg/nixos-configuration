@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -24,6 +25,8 @@
 
   networking.networkmanager.enable = true;
   # TODO: check its options
+  # Prevent nm to manage container interfaces
+  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -117,6 +120,14 @@
   # Auto upgrade options
   system.autoUpgrade.enable = true;
   # system.autoUpgrade.allowReboot = true;
+  nix.gc.automatic = true;
 
+  security.hideProcessInformation = true;
+
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" "tmux" "tmuxinator" "autojump" "vi-mode" ];
+    theme = "kolo";
+  };
 }
 
