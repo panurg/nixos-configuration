@@ -11,9 +11,18 @@
       <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use GRUB
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+      efiSupport = true;
+      efiInstallAsRemovable = false;
+      device = "nodev";
+    };
+  };
 
   networking.hostName = "nixos-playground"; # Define your hostname.
 
@@ -77,7 +86,7 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-    enable = true;
+    enable = false;
     # TODO: add Russian layout
     layout = "us";
     windowManager.i3.enable = true;
