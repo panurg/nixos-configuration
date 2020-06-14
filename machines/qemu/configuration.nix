@@ -121,6 +121,8 @@
     # TODO: openssh.authorizedKeys.keys
   };
   home-manager.users.panurg = { pkgs, ... }: {
+    home.packages = with pkgs; [
+    ];
     gtk = {
       enable = true;
       theme = {
@@ -140,6 +142,13 @@
         }
         widget "vim-main-window.*GtkForm" style "vimfix"
       '';
+    };
+    keyboard = {
+      layout = "us,ru";
+      # TODO: identify model
+      model = "pc105";
+      variant = "";
+      options = [ "grp:caps_toggle" ];
     };
   };
 
