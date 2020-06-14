@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos>
       <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
     ];
 
@@ -106,6 +107,10 @@
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
 
+  # Home Manager settings
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.panurg = {
     description = "Alexander Abrosimov";
@@ -114,6 +119,28 @@
     # TODO: prepare system of mutableUsers set to false and  hashedPassword (or smth)
     initialPassword = "test";
     # TODO: openssh.authorizedKeys.keys
+  };
+  home-manager.users.panurg = { pkgs, ... }: {
+    gtk = {
+      enable = true;
+      theme = {
+        package = pkgs.numix-gtk-theme;
+        name = "Numix";
+      };
+      iconTheme = {
+        package = pkgs.numix-icon-theme-circle;
+        name = "Numix Circle";
+      };
+      # TODO: add cursor theme:
+      # gtk-cursor-theme-name = "Vanilla-DMZ-AA"
+      # gtk-cursor-theme-size = 48
+      gtk2.extraConfig = ''
+        style "vimfix" {
+          bg[NORMAL] = "#282828"
+        }
+        widget "vim-main-window.*GtkForm" style "vimfix"
+      '';
+    };
   };
 
   # This value determines the NixOS release from which the default
@@ -130,11 +157,5 @@
   nix.gc.automatic = true;
 
   security.hideProcessInformation = true;
-
-  programs.zsh.ohMyZsh = {
-    enable = true;
-    plugins = [ "git" "tmux" "tmuxinator" "autojump" "vi-mode" ];
-    theme = "kolo";
-  };
 }
 
