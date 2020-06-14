@@ -120,7 +120,7 @@
     initialPassword = "test";
     # TODO: openssh.authorizedKeys.keys
   };
-  home-manager.users.panurg = { pkgs, ... }: {
+  home-manager.users.panurg = { pkgs, config, ... }: {
     home.packages = with pkgs; [
     ];
     gtk = {
@@ -149,6 +149,19 @@
       model = "pc105";
       variant = "";
       options = [ "grp:caps_toggle" ];
+    };
+    home = {
+      username = "panurg";
+      language = {
+        base = "ru_RU.utf8";
+        messages = "en_US.utf8";
+        collate = "en_US.utf8";
+      };
+      sessionVariables = {
+      # FOO = "Hello";
+      # BAR = "${config.home.sessionVariables.FOO} World!";
+      };
+      stateVersion = "20.03";
     };
   };
 
