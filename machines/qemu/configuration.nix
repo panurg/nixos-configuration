@@ -164,8 +164,8 @@
     home.packages = with pkgs; [
     ];
     programs = {
-      # TODO: check autorandr, bat, broot, beets, browserpass or pass,
-      # direnv, keychain, lsd, neovim, noti, ssh, zathura
+      # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
+      # direnv or lorri, keychain, lsd, neovim, noti, ssh, zathura
       # TODO wayland: mako
       chromium.enable = true;
       command-not-found.enable = true;
@@ -174,7 +174,10 @@
       fzf.enable = true;
       git.enable = true;
       lesspipe.enable = true; # ???
-      mpv.enable = true;
+      mpv = {
+        enable = true;
+        scripts = [ pkgs.mpvScripts.mpris ];
+      }
       rofi = {
         enable = true;
         theme = "gruvbox-dark-soft";
@@ -454,11 +457,328 @@
           COMPLETION_WAITING_DOTS = true;
         };
         sessionVariables = {
-          EDITOR = "vim";
         };
         shellAliases = {
           mux = "tmuxinator";
         };
+      };
+    };
+    services = {
+      # TODO: check out flameshot, systemd getmail, hound (!!!), redshift, screen-locker
+      # spotifyd, syncthing, udiskie, unclutter, XSuspender
+      dunst = {
+        enable = true;
+        settings = {
+          global = {
+            font = "Noto Sans 20";
+            allow_markup = true;
+            format = "<b>%s</b>\n%b";
+            sort = true;
+            indicate_hidden = true;
+            alignment = "left";
+            bounce_freq = 0;
+            show_age_threshold = 60;
+            word_wrap = true;
+            ignore_newline = false;
+            geometry = "300x5-30+20";
+            shrink = false;
+            transparency = 0;
+            idle_threshold = 120;
+            monitor = 0;
+            follow = "mouse";
+            sticky_history = true;
+            history_length = 20;
+            show_indicators = true;
+            line_height = 0;
+            separator_height = 2;
+            padding = 8;
+            horizontal_padding = 8;
+            separator_color = "frame";
+            startup_notification = false;
+            dmenu = "/usr/bin/dmenu -p dunst:";
+            browser = "/usr/bin/firefox -new-tab";
+            icon_position = "off";
+          };
+          frame = {
+            width = 3;
+            color = "#aaaaaa";
+          };
+          shortcuts = {
+            close = "ctrl+space";
+            close_all = "ctrl+shift+space";
+            history = "ctrl+grave";
+            context = "ctrl+shift+period";
+          };
+          urgency_low = {
+            background = "#222222";
+            foreground = "#888888";
+            timeout = 10;
+          };
+          urgency_normal = {
+            background = "#285577";
+            foreground = "#ffffff";
+            timeout = 10;
+          };
+          urgency_critical = {
+            background = "#900000";
+            foreground = "#ffffff";
+            timeout = 0;
+          };
+        };
+      };
+      mpd.enable = true;
+      mpdris2 = {
+        enable = true;
+        multimediaKeys = true;
+        notifications = true;
+      };
+      picom = {
+        # TODO: compare compton and picom configs, looks like they are different
+        enable = true;
+        backend = "glx";
+        fade = true;
+        fadeDelta = 2;
+        fadeSteps = [ "0.01" "0.01" ]
+        vsync = true;
+      };
+      polybar = {
+        enable = true;
+        config = {
+          colors = {
+            background = "#444444";
+            background-alt = "#686868";
+            foreground = "#dddddd";
+            foreground-alt = "#919191";
+            accent = "#f0544c";
+          };
+          "bar/root" = {
+            fixed-center = false;
+            height = 50;
+            background = "${colors.background}";
+            foreground = "${colors.foreground}";
+            line-size = 4;
+            module-margin-left = 2;
+            font-0 = "Noto Sans:size=20;5";
+            font-1 = "FontAwesome:size=20;5";
+            font-2 = "IcoMoon\-Free:size=20;5";
+            font-3 = "Noto Sans:size=24:weight=bold;5";
+            font-4 = "icomoon:size=20;5";
+            font-5 = "Noto Emoji:size=20:weight=bold;5";
+            font-6 = "icomoon\-wifi:size=20;5";
+            font-7 = "Noto Sans:size=17;5";
+            modules-left = [ "i3" "mpd" ];
+            modules-center = [ "xwindow" ];
+            modules-right = [ "xkeyboard" "backlight" "volume" "wlan" "battery" "date" ];
+            tray-position = "right";
+            tray-padding = 0;
+            tray-maxsize = 50;
+            # wm-restack = i3
+            # override-redirect = true
+            scroll-up = "i3wm-wsnext";
+            scroll-down = "i3wm-wsprev";
+          };
+          "module/xwindow" = {
+            type = "internal/xwindow";
+            label-maxlen = 120;
+          };
+          "module/xkeyboard" = {
+            type = "internal/xkeyboard";
+            format = "<label-layout>";
+            label-layout-font = 4;
+          };
+          "module/i3" = {
+            type = "internal/i3";
+            index-sort = true;
+            format = "<label-state>";
+            wrapping-scroll = false;
+            ws-icon-0 = "1;関";
+            ws-icon-1 = "2;";
+            ws-icon-2 = "3;";
+            ws-icon-3 = "4;萾";
+            ws-icon-4 = "5;";
+            ws-icon-5 = "9;㻚";
+            ws-icon-default = "";
+            label-focused = "%icon%";
+            label-focused-background = "${colors.background-alt}";
+            label-focused-underline = "${colors.accent}";
+            label-focused-underline-size = 8;
+            label-focused-padding = 2;
+            label-unfocused = "%icon%";
+            label-unfocused-padding = 2;
+            label-visible = "%icon%";
+            label-visible-padding = 2;
+            label-urgent = "%icon%";
+            label-urgent-background = "${colors.accent}";
+            label-urgent-padding = 2;
+          };
+          "module/backlight" = {
+            type = "internal/backlight";
+            card = "intel_backlight";
+            format = "<ramp>";
+            ramp-0 = "🌕";
+            ramp-1 = "🌔";
+            ramp-2 = "🌓";
+            ramp-3 = "🌒";
+            ramp-4 = "🌑";
+          };
+
+          "module/wlan" = {
+            type = "internal/network";
+            interface = "wlp60s0";
+            interval = "3.0";
+            format-connected = "<label-connected> <ramp-signal>";
+            label-connected = "";
+            label-alt-connected = " %essid%  %downspeed%  %upspeed%";
+            label-alt-connected-foreground = "${colors.foreground-alt}";
+            label-alt-connected-font = 8;
+            label-disconnected = "";
+            ramp-signal-0 = "煵";
+            ramp-signal-1 = "䋻";
+            ramp-signal-2 = "";
+            ramp-signal-3 = "渏";
+          };
+
+          "module/date" = {
+            label-margin-right = 1;
+            type = "internal/date";
+            interval = 1;
+            date = "";
+            date-alt = "%{T8}%{F#919191} %e %a w%V%{F-}%{T-}";
+            time = "%R";
+            time-alt = "${self.time}";
+            label = "%date% %{T4}%time%%{T-}";
+          };
+
+          "module/volume" = {
+            type = "internal/volume";
+            format-volume = "<ramp-volume>";
+            speaker-mixer = "Speaker";
+            headphone-mixer = "Headphone";
+            headphone-id = 15;
+            mapped = "true;";
+            label-muted = "䔄";
+            label-muted-foreground = "${colors.accent}";
+            ramp-volume-0 = "蒈";
+            ramp-volume-1 = "惣";
+            ramp-volume-2 = "葤";
+            ramp-volume-3 = "烵";
+            ramp-headphones-0 = "蒈 䚀";
+            ramp-headphones-1 = "惣 䚀";
+            ramp-headphones-2 = "葤 䚀";
+            ramp-headphones-3 = "烵 䚀";
+          };
+
+          "module/battery" = {
+            type = "internal/battery";
+            battery = "BAT0";
+            adapter = "AC";
+            time-format = "%R";
+            format-charging = "<label-charging> <animation-charging>";
+            format-discharging = "<label-discharging> <ramp-capacity>";
+            format-full = "䀹";
+            label-charging = "";
+            label-alt-charging = "䀝 %percentage%% 娫 %time%";
+            label-alt-charging-foreground = "${colors.foreground-alt}";
+            label-alt-charging-font = 8;
+            label-discharging = "";
+            label-alt-discharging = "䀝 %percentage%% 娫 %time%";
+            label-alt-discharging-foreground = "${colors.foreground-alt}";
+            label-alt-discharging-font = 8;
+            ramp-capacity-0 = "";
+            ramp-capacity-0-foreground = "${colors.accent}";
+            ramp-capacity-1 = "";
+            ramp-capacity-2 = "";
+            ramp-capacity-3 = "";
+            ramp-capacity-4 = "";
+            animation-charging-0 = "";
+            animation-charging-1 = "";
+            animation-charging-2 = "";
+            animation-charging-3 = "";
+            animation-charging-4 = "";
+          };
+
+          "module/mpd" = {
+            type = "internal/mpd";
+            host = "127.0.0.1";
+            port = "6600";
+            password = "${env:MPD_PASSWORD:}";
+            interval = 1;
+            format-online = "";
+            format-playing = "<label-song>";
+            format-playing-foreground = "${colors.foreground-alt}";
+            label-song-font = 8;
+          };
+        };
+        script = "polybar root &";
+      };
+    };
+    systemd.user.sessionVariables = { 
+      EDITOR = "vim";
+    };
+    # TODO: check out wayland configuration: sway
+    xdg = {
+      enable = true;
+      userDirs = {
+        enable = true;
+        desktop = "\$HOME/desktop";
+        documents = "\$HOME/doc";
+        download = "\$HOME/dl";
+        music = "\$HOME/music";
+        pictures = "\$HOME/img";
+        publicShare = "\$HOME/share";
+        templates = "\$HOME/templates";
+        videos = "\$HOME/video";
+      };
+    };
+    xresources.properties = {
+      "*.foreground:" = "#dedede";
+      "*.background:" = "#444444";
+      "*.cursorColor:" = "#dedede";
+
+      # black
+      "*.color0:" = "#555555";
+      "*.color8:" = "#888888";
+
+      # red
+      "*.color1:" = "#9c3528";
+      "*.color9:" = "#d64937";
+
+      # green
+      "*.color2:" = "#61bc3b";
+      "*.color10:" = "#86df5d";
+
+      # yellow
+      "*.color3:" = "#f3b43a";
+      "*.color11:" = "#fdd75a";
+
+      # blue
+      "*.color4:" = "#0d68a8";
+      "*.color12:" = "#0f75bd";
+
+      # magenta
+      "*.color5:" = "#744560";
+      "*.color13:" = "#9e5e83";
+
+      # cyan
+      "*.color6:" = "#288e9c";
+      "*.color14:" = "#37c3d6";
+
+      # white
+      "*.color7:" = "#a2a2a2";
+      "*.color15:" = "#f9f9f9";
+    };
+    xsession = {
+      enable = true;
+      numlock.enable = true;
+      pointerCursor = {
+        package = pkgs.numix-cursor-theme;
+        name = "Numix-Cursor";
+        size = 48;
+      };
+      # TODO: learn about Status Notifier Items (SNI) protocol
+      windowManager.i3 = {
+        enable = true;
+      # TODO: fill i3 config (!!!)
       };
     };
   };
