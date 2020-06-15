@@ -107,6 +107,9 @@
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
 
+  # Fix for Home Manager error
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+
   # Home Manager settings
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
@@ -141,19 +144,19 @@
         widget "vim-main-window.*GtkForm" style "vimfix"
       '';
     };
-    keyboard = {
-      layout = "us,ru";
-      # TODO: identify model
-      model = "pc105";
-      variant = "";
-      options = [ "grp:caps_toggle" ];
-    };
     home = {
       username = "panurg";
       language = {
         base = "ru_RU.utf8";
-        messages = "en_US.utf8";
-        collate = "en_US.utf8";
+        # messages = "en_US.utf8";
+        # collate = "en_US.utf8";
+      };
+      keyboard = {
+	      layout = "us,ru";
+      # TODO: identify model
+	      model = "pc105";
+	      variant = "";
+	      options = [ "grp:caps_toggle" ];
       };
       sessionVariables = {
       # FOO = "Hello";
@@ -169,7 +172,7 @@
       # TODO wayland: mako
       chromium.enable = true;
       command-not-found.enable = true;
-      dircolors.enable = true;
+      # dircolors.enable = true;
       feh.enable = true;
       fzf.enable = true;
       git.enable = true;
@@ -177,7 +180,7 @@
       mpv = {
         enable = true;
         scripts = [ pkgs.mpvScripts.mpris ];
-      }
+      };
       rofi = {
         enable = true;
         theme = "gruvbox-dark-soft";
@@ -538,8 +541,8 @@
         backend = "glx";
         fade = true;
         fadeDelta = 2;
-        fadeSteps = [ "0.01" "0.01" ]
-        vsync = true;
+        fadeSteps = [ "0.01" "0.01" ];
+        # vsync = true;
       };
       polybar = {
         enable = true;
@@ -554,8 +557,8 @@
           "bar/root" = {
             fixed-center = false;
             height = 50;
-            background = "${colors.background}";
-            foreground = "${colors.foreground}";
+            background = "\${colors.background}";
+            foreground = "\${colors.foreground}";
             line-size = 4;
             module-margin-left = 2;
             font-0 = "Noto Sans:size=20;5";
@@ -599,8 +602,8 @@
             ws-icon-5 = "9;㻚";
             ws-icon-default = "";
             label-focused = "%icon%";
-            label-focused-background = "${colors.background-alt}";
-            label-focused-underline = "${colors.accent}";
+            label-focused-background = "\${colors.background-alt}";
+            label-focused-underline = "\${colors.accent}";
             label-focused-underline-size = 8;
             label-focused-padding = 2;
             label-unfocused = "%icon%";
@@ -608,7 +611,7 @@
             label-visible = "%icon%";
             label-visible-padding = 2;
             label-urgent = "%icon%";
-            label-urgent-background = "${colors.accent}";
+            label-urgent-background = "\${colors.accent}";
             label-urgent-padding = 2;
           };
           "module/backlight" = {
@@ -629,7 +632,7 @@
             format-connected = "<label-connected> <ramp-signal>";
             label-connected = "";
             label-alt-connected = " %essid%  %downspeed%  %upspeed%";
-            label-alt-connected-foreground = "${colors.foreground-alt}";
+            label-alt-connected-foreground = "\${colors.foreground-alt}";
             label-alt-connected-font = 8;
             label-disconnected = "";
             ramp-signal-0 = "煵";
@@ -645,7 +648,7 @@
             date = "";
             date-alt = "%{T8}%{F#919191} %e %a w%V%{F-}%{T-}";
             time = "%R";
-            time-alt = "${self.time}";
+            time-alt = "\${self.time}";
             label = "%date% %{T4}%time%%{T-}";
           };
 
@@ -657,7 +660,7 @@
             headphone-id = 15;
             mapped = "true;";
             label-muted = "䔄";
-            label-muted-foreground = "${colors.accent}";
+            label-muted-foreground = "\${colors.accent}";
             ramp-volume-0 = "蒈";
             ramp-volume-1 = "惣";
             ramp-volume-2 = "葤";
@@ -678,14 +681,14 @@
             format-full = "䀹";
             label-charging = "";
             label-alt-charging = "䀝 %percentage%% 娫 %time%";
-            label-alt-charging-foreground = "${colors.foreground-alt}";
+            label-alt-charging-foreground = "\${colors.foreground-alt}";
             label-alt-charging-font = 8;
             label-discharging = "";
             label-alt-discharging = "䀝 %percentage%% 娫 %time%";
-            label-alt-discharging-foreground = "${colors.foreground-alt}";
+            label-alt-discharging-foreground = "\${colors.foreground-alt}";
             label-alt-discharging-font = 8;
             ramp-capacity-0 = "";
-            ramp-capacity-0-foreground = "${colors.accent}";
+            ramp-capacity-0-foreground = "\${colors.accent}";
             ramp-capacity-1 = "";
             ramp-capacity-2 = "";
             ramp-capacity-3 = "";
@@ -701,11 +704,11 @@
             type = "internal/mpd";
             host = "127.0.0.1";
             port = "6600";
-            password = "${env:MPD_PASSWORD:}";
+            password = "\${env:MPD_PASSWORD:}";
             interval = 1;
             format-online = "";
             format-playing = "<label-song>";
-            format-playing-foreground = "${colors.foreground-alt}";
+            format-playing-foreground = "\${colors.foreground-alt}";
             label-song-font = 8;
           };
         };
