@@ -85,10 +85,16 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-    enable = false;
+    enable = true;
+    enableCtrlAltBackspace = true;
     # TODO: add Russian layout
     layout = "us";
-    windowManager.i3.enable = true;
+    # dpi = 123;
+    # imwheel.enable = true;
+    # libinput.enable = true;
+    # modules = [ pkgs.xf86_input_wacom ];
+    # wacom.enable = true;
+    # xautolock.enable = true;
     # videoDrivers = [ "intel" ]
     # Auto login in case of disk encryption
     # displayManager = {
@@ -99,6 +105,16 @@
     #     autoLogin.user = "alice";
     #   };
     # };
+    displayManager = {
+      defaultSession = "home-manager";
+      session = [
+        {
+          manage = "desktop";
+          name = "home-manager";
+          start = "";
+        }
+      ];
+    };
   };
   # services.xserver.xkbOptions = "eurosign:e";
   # On 64-bit systems, if you want OpenGL for 32-bit programs such as in Wine, you should also set the following:
@@ -146,17 +162,13 @@
     };
     home = {
       username = "panurg";
-      language = {
-        base = "ru_RU.utf8";
-        # messages = "en_US.utf8";
-        # collate = "en_US.utf8";
-      };
+      language.base = "en_US.utf8";
       keyboard = {
-	      layout = "us,ru";
-      # TODO: identify model
-	      model = "pc105";
-	      variant = "";
-	      options = [ "grp:caps_toggle" ];
+        layout = "us,ru";
+        # TODO: identify model
+        model = "pc105";
+        variant = "";
+        options = [ "grp:caps_toggle" ];
       };
       sessionVariables = {
       # FOO = "Hello";
@@ -542,7 +554,6 @@
         fade = true;
         fadeDelta = 2;
         fadeSteps = [ "0.01" "0.01" ];
-        # vsync = true;
       };
       polybar = {
         enable = true;
@@ -715,7 +726,7 @@
         script = "polybar root &";
       };
     };
-    systemd.user.sessionVariables = { 
+    systemd.user.sessionVariables = {
       EDITOR = "vim";
     };
     # TODO: check out wayland configuration: sway
@@ -734,41 +745,41 @@
       };
     };
     xresources.properties = {
-      "*.foreground:" = "#dedede";
-      "*.background:" = "#444444";
-      "*.cursorColor:" = "#dedede";
+      "*.foreground" = "#dedede";
+      "*.background" = "#444444";
+      "*.cursorColor" = "#dedede";
 
       # black
-      "*.color0:" = "#555555";
-      "*.color8:" = "#888888";
+      "*.color0" = "#555555";
+      "*.color8" = "#888888";
 
       # red
-      "*.color1:" = "#9c3528";
-      "*.color9:" = "#d64937";
+      "*.color1" = "#9c3528";
+      "*.color9" = "#d64937";
 
       # green
-      "*.color2:" = "#61bc3b";
-      "*.color10:" = "#86df5d";
+      "*.color2" = "#61bc3b";
+      "*.color10" = "#86df5d";
 
       # yellow
-      "*.color3:" = "#f3b43a";
-      "*.color11:" = "#fdd75a";
+      "*.color3" = "#f3b43a";
+      "*.color11" = "#fdd75a";
 
       # blue
-      "*.color4:" = "#0d68a8";
-      "*.color12:" = "#0f75bd";
+      "*.color4" = "#0d68a8";
+      "*.color12" = "#0f75bd";
 
       # magenta
-      "*.color5:" = "#744560";
-      "*.color13:" = "#9e5e83";
+      "*.color5" = "#744560";
+      "*.color13" = "#9e5e83";
 
       # cyan
-      "*.color6:" = "#288e9c";
-      "*.color14:" = "#37c3d6";
+      "*.color6" = "#288e9c";
+      "*.color14" = "#37c3d6";
 
       # white
-      "*.color7:" = "#a2a2a2";
-      "*.color15:" = "#f9f9f9";
+      "*.color7" = "#a2a2a2";
+      "*.color15" = "#f9f9f9";
     };
     xsession = {
       enable = true;
