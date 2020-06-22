@@ -150,9 +150,6 @@
         package = pkgs.numix-icon-theme-circle;
         name = "Numix Circle";
       };
-      # TODO: add cursor theme:
-      # gtk-cursor-theme-name = "Vanilla-DMZ-AA"
-      # gtk-cursor-theme-size = 48
       gtk2.extraConfig = ''
         style "vimfix" {
           bg[NORMAL] = "#282828"
@@ -549,7 +546,7 @@
       };
       picom = {
         # TODO: compare compton and picom configs, looks like they are different
-        enable = true;
+        enable = false;
         backend = "glx";
         fade = true;
         fadeDelta = 2;
@@ -787,12 +784,120 @@
       pointerCursor = {
         package = pkgs.numix-cursor-theme;
         name = "Numix-Cursor";
-        size = 48;
+        size = 24;
       };
       # TODO: learn about Status Notifier Items (SNI) protocol
       windowManager.i3 = {
         enable = true;
-      # TODO: fill i3 config (!!!)
+        config = {
+          assigns = {
+            "2" = [ { class = "Chromium"; } ];
+            "3" = [ { class = "Gvim"; } ];
+            "6" = [ { class = "Steam"; } ];
+            "5" = [ { class = "TelegramDesktop"; } { class = "Slack"; } ];
+            "9" = [ { class = "Sonata"; } ];
+          };
+          bars = [ ];
+          colors = let
+            base_bg = "#444444";
+            sel_bg = "#686868";
+            acc_bg = "#f0544c";
+            base_fg = "#dddddd";
+            sel_fg = "#ffffff";
+          in {
+            background = "${base_bg}";
+            focused = { background = "${acc_bg}"; border = "${acc_bg}"; childBorder = "${acc_bg}"; indicator = "#2e9ef4"; text = "${sel_fg}"; };
+            focusedInactive = { background = "${sel_bg}"; border = "${sel_bg}"; childBorder = "${base_bg}"; indicator = "${base_bg}"; text = "${sel_fg}"; };
+            unfocused = { background = "${base_bg}"; border = "${base_bg}"; childBorder = "${base_bg}"; indicator = "${base_bg}"; text = "${base_fg}"; };
+            urgent = { background = "#900000"; border = "#2f343a"; childBorder = "#900000"; indicator = "#900000"; text = "#ffffff"; };
+            placeholder = { background = "${sel_bg}"; border = "#000000"; childBorder = "${sel_bg}"; indicator = "#000000"; text = "${sel_fg}"; };
+          };
+          floating.criteria = [ { class = "Galculator"; } ];
+          fonts = [ "Noto Sans 12" "Sans 12" ];
+          keybindings = let
+            cfg = config.xsession.windowManager.i3.config;
+            modifier = cfg.modifier;
+          in {
+            "${modifier}+Return" = "exec ${cfg.terminal}";
+            "${modifier}+Shift+c" = "kill";
+            "${modifier}+p" = "exec ${cfg.menu}";
+            # TODO: check lockers
+            "$Control+Mod1+l" = "exec i3lock -c 000000";
+            "${modifier}+h" = "focus left";
+            "${modifier}+j" = "focus down";
+            "${modifier}+k" = "focus up";
+            "${modifier}+l" = "focus right";
+            "${modifier}+Shift+h" = "move left";
+            "${modifier}+Shift+j" = "move down";
+            "${modifier}+Shift+k" = "move up";
+            "${modifier}+Shift+l" = "move right";
+            "${modifier}+s" = "split h";
+            "${modifier}+v" = "split v";
+            "${modifier}+f" = "fullscreen toggle";
+            "${modifier}+q" = "layout stacking";
+            "${modifier}+w" = "layout tabbed";
+            "${modifier}+e" = "layout toggle split";
+            "${modifier}+Shift+space" = ''
+              floating toggle; \
+              [tiling] border pixel ${toString cfg.window.border}; \
+              [floating] border normal ${toString cfg.floating.border}
+            '';
+            "${modifier}+space" = "focus mode_toggle";
+            "${modifier}+a" = "focus parent";
+            "${modifier}+d" = "focus child";
+            "${modifier}+1" = "workspace number 1";
+            "${modifier}+2" = "workspace number 2";
+            "${modifier}+3" = "workspace number 3";
+            "${modifier}+4" = "workspace number 4";
+            "${modifier}+5" = "workspace number 5";
+            "${modifier}+6" = "workspace number 6";
+            "${modifier}+7" = "workspace number 7";
+            "${modifier}+8" = "workspace number 8";
+            "${modifier}+9" = "workspace number 8";
+            "${modifier}+Shift+1" = "move container to workspace number 1";
+            "${modifier}+Shift+2" = "move container to workspace number 2";
+            "${modifier}+Shift+3" = "move container to workspace number 3";
+            "${modifier}+Shift+4" = "move container to workspace number 4";
+            "${modifier}+Shift+5" = "move container to workspace number 5";
+            "${modifier}+Shift+6" = "move container to workspace number 6";
+            "${modifier}+Shift+7" = "move container to workspace number 7";
+            "${modifier}+Shift+8" = "move container to workspace number 8";
+            "${modifier}+Shift+9" = "move container to workspace number 9";
+            "${modifier}+Shift+r" = "restart";
+            "${modifier}+Shift+e" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
+            "${modifier}+r" = "mode resize";
+            "${modifier}+grave" = "scratchpad show";
+            "${modifier}+Shift+grave" = ''
+              border normal ${toString cfg.floating.border}; \
+              move scratchpad
+            '';
+          };
+          menu = "i3-dmenu-desktop --dmenu='${pkgs.rofi}/bin/rofi -dmenu'";
+          modes.resize = let
+            modifier = config.xsession.windowManager.i3.config.modifier;
+          in {
+            "h" = "resize shrink width 10 px or 10 ppt";
+            "j" = "resize grow height 10 px or 10 ppt";
+            "k" = "resize shrink height 10 px or 10 ppt";
+            "l" = "resize grow width 10 px or 10 ppt";
+            "${modifier}+h" = "resize shrink width 10 px or 10 ppt";
+            "${modifier}+j" = "resize grow height 10 px or 10 ppt";
+            "${modifier}+k" = "resize shrink height 10 px or 10 ppt";
+            "${modifier}+l" = "resize grow width 10 px or 10 ppt";
+            "Escape" = "mode default";
+            "Return" = "mode default";
+          };
+          modifier = "Mod1";
+          terminal = "${pkgs.rxvt_unicode}/bin/urxvtc";
+          window = {
+            hideEdgeBorders = "smart";
+            titlebar = false;
+          };
+          workspaceAutoBackAndForth = true;
+        };
+        extraConfig = ''
+          exec i3-msg 'workspace number 4'
+        '';
       };
     };
   };
