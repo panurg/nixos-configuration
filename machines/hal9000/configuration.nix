@@ -100,17 +100,7 @@
     enableCtrlAltBackspace = true;
     # TODO: add Russian layout
     layout = "us";
-    dpi = 192;
     # imwheel.enable = true;
-    libinput = {
-      enable = true;
-      accelProfile = "adaptive";
-      accelSpeed = "1";
-      clickMethod = "clickfinger";
-      disableWhileTyping = true;
-      naturalScrolling = true;
-      # TODO: check what is sendEventsMode
-    };
     # modules = [ pkgs.xf86_input_wacom ];
     # wacom.enable = true;
     # xautolock.enable = true;
@@ -132,15 +122,6 @@
       };
     };
     desktopManager.gnome3.enable = true;
-    xrandrHeads = [
-      {
-        output = "eDP-1";
-        monitorConfig = ''
-          DisplaySize 423 238
-        '';
-        primary = true;
-      }
-    ];
   };
   # services.xserver.xkbOptions = "eurosign:e";
   # On 64-bit systems, if you want OpenGL for 32-bit programs such as in Wine, you should also set the following:
@@ -189,13 +170,6 @@
     home = {
       username = "panurg";
       language.base = "en_US.utf8";
-      keyboard = {
-        layout = "us,ru";
-        # TODO: identify model
-        model = "pc105";
-        variant = "";
-        options = [ "grp:caps_toggle" ];
-      };
       sessionVariables = {
       # FOO = "Hello";
       # BAR = "${config.home.sessionVariables.FOO} World!";
@@ -523,7 +497,6 @@
       };
     };
     xresources.properties = {
-      "Xft.dpi" = 192;
       "*.foreground" = "#dedede";
       "*.background" = "#444444";
       "*.cursorColor" = "#dedede";
@@ -560,18 +533,6 @@
       "*.color7" = "#a2a2a2";
       "*.color15" = "#f9f9f9";
     };
-    xsession = {
-      numlock.enable = true;
-      pointerCursor = {
-        package = pkgs.numix-cursor-theme;
-        name = "Numix-Cursor";
-        size = 48;
-      };
-      # TODO: learn about Status Notifier Items (SNI) protocol
-      profileExtra = ''
-        urxvtd -q -f -o
-      '';
-    };
   };
 
   # This value determines the NixOS release from which the default
@@ -591,7 +552,6 @@
 
   fonts = {
     enableDefaultFonts = true;
-    fontconfig.dpi = 192;
     fonts = with pkgs; [
       noto-fonts
       noto-fonts-cjk
@@ -602,4 +562,3 @@
 
   nixpkgs.config.allowUnfree = true;
 }
-
