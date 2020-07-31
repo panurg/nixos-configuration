@@ -149,7 +149,42 @@
     initialPassword = "test";
     # TODO: openssh.authorizedKeys.keys
   };
-  home-manager.users.panurg = { pkgs, config, ... }: {
+  home-manager.users.panurg = { pkgs, config, lib, ... }: {
+    dconf.settings = let
+      mkTuple = lib.hm.gvariant.mkTuple;
+    in {
+      "org/gnome/desktop/peripherals/touchpad" = {
+        speed = 0.65;
+        tap-to-click = true;
+        two-finger-scrolling-enabled = true;
+      };
+      "org/gnome/desktop/input-sources" = {
+        current = "uint32 0";
+        sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "ru" ]) ];
+        xkb-options = [ "terminate:ctrl_alt_bksp" "grp:caps_toggle" ];
+      };
+      "org/gnome/desktop/calendar" = {
+        show-weekdate = true;
+      };
+      "org/gnome/desktop/interface" = {
+        clock-show-weekday = true;
+        show-battery-percentage = true;
+        cursor-theme = config.xsession.pointerCursor.name;
+        cursor-size = config.xsession.pointerCursor.size;
+      };
+      "org/gnome/desktop/privacy" = {
+        report-technical-problems = false;
+      };
+      "org/gnome/desktop/wm/preferences" = {
+        focus-mode = "sloppy";
+      };
+      "org/gnome/settings-daemon/plugins/power" = {
+        power-button-action = "hibernate";
+      };
+      "org/gnome/GWeather" = {
+        temperature-unit = "centigrade";
+      };
+    };
     gtk = {
       enable = true;
       theme = {
@@ -167,6 +202,11 @@
         widget "vim-main-window.*GtkForm" style "vimfix"
       '';
     };
+    xsession.pointerCursor = {
+      package = pkgs.numix-cursor-theme;
+      name = "Numix-Cursor";
+      size = 48;
+    };
     home = {
       username = "panurg";
       language.base = "en_US.utf8";
@@ -177,6 +217,8 @@
       stateVersion = "20.03";
     };
     home.packages = with pkgs; [
+      gnome3.gnome-tweak-tool
+      gnome3.evince
     ];
     programs = {
       # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
@@ -556,6 +598,7 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+      font-awesome
       corefonts
     ];
   };
