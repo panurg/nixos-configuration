@@ -144,7 +144,7 @@
   users.users.panurg = {
     description = "Alexander Abrosimov";
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ];
     # TODO: prepare system of mutableUsers set to false and  hashedPassword (or smth)
     initialPassword = "test";
     # TODO: openssh.authorizedKeys.keys
@@ -184,6 +184,9 @@
       "org/gnome/GWeather" = {
         temperature-unit = "centigrade";
       };
+      "org/gnome/shell" = {
+        always-show-log-out = true;
+      };
     };
     gtk = {
       enable = true;
@@ -219,6 +222,9 @@
     home.packages = with pkgs; [
       gnome3.gnome-tweak-tool
       gnome3.evince
+      spotify
+      slack-dark
+      tdesktop
     ];
     programs = {
       # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
