@@ -67,6 +67,9 @@
     vim git
   ];
 
+  # Enable ZSH as an interactive shell
+  environment.shells = [ pkgs.zsh ];
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -148,6 +151,7 @@
     # TODO: prepare system of mutableUsers set to false and  hashedPassword (or smth)
     initialPassword = "test";
     # TODO: openssh.authorizedKeys.keys
+    shell = pkgs.zsh;
   };
   home-manager.users.panurg = { pkgs, config, lib, ... }: {
     dconf.settings = let
