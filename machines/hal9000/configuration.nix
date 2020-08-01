@@ -190,6 +190,11 @@
       };
       "org/gnome/shell" = {
         always-show-log-out = true;
+        enabled-extensions = [
+          "user-theme@gnome-shell-extensions.gcampax.github.com"
+          "remove-dropdown-arrows@mpdeimos.com"
+          "mprisindicatorbutton@JasonLG1979.github.io"
+        ];
       };
     };
     gtk = {
@@ -200,7 +205,7 @@
       };
       iconTheme = {
         package = pkgs.numix-icon-theme-circle;
-        name = "Numix Circle";
+        name = "Numix-Circle";
       };
       gtk2.extraConfig = ''
         style "vimfix" {
@@ -226,9 +231,12 @@
     home.packages = with pkgs; [
       gnome3.gnome-tweak-tool
       gnome3.evince
+      gnomeExtensions.mpris-indicator-button
+      gnomeExtensions.remove-dropdown-arrows
       spotify
       slack-dark
       tdesktop
+      ag
     ];
     programs = {
       # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
