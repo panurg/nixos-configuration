@@ -154,21 +154,23 @@
     shell = pkgs.zsh;
   };
   home-manager.users.panurg = { pkgs, config, lib, ... }: {
-    dconf.settings = let
-      mkTuple = lib.hm.gvariant.mkTuple;
-    in {
+    dconf.settings = with lib.hm.gvariant; {
       "org/gnome/desktop/peripherals/touchpad" = {
         speed = 0.65;
         tap-to-click = true;
         two-finger-scrolling-enabled = true;
       };
       "org/gnome/desktop/input-sources" = {
-        current = "uint32 0";
+        current = mkUint32(0);
         sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "ru" ]) ];
         xkb-options = [ "terminate:ctrl_alt_bksp" "grp:caps_toggle" ];
       };
       "org/gnome/desktop/calendar" = {
         show-weekdate = true;
+      };
+      "org/gnome/desktop/notifications/application/spotify" = {
+        application-id = "spotify.desktop";
+        details-in-lock-screen = true;
       };
       "org/gnome/desktop/interface" = {
         clock-show-weekday = true;
@@ -178,6 +180,9 @@
       };
       "org/gnome/desktop/privacy" = {
         report-technical-problems = false;
+      };
+      "org/gnome/desktop/session" ={
+        idle-delay = mkUint32(900);
       };
       "org/gnome/desktop/wm/preferences" = {
         focus-mode = "sloppy";
