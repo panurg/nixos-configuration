@@ -189,6 +189,7 @@
       };
       "org/gnome/settings-daemon/plugins/power" = {
         power-button-action = "hibernate";
+        sleep-inactive-ac-type = "blank";
       };
       "org/gnome/GWeather" = {
         temperature-unit = "centigrade";
