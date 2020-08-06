@@ -34,22 +34,37 @@
   fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
   fileSystems."/home".options = [ "noatime" "nodiratime" "discard" ];
 
-  networking.hostName = "hal9000"; # Define your hostname.
+  networking = {
+    hostName = "hal9000"; # Define your hostname.
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.wlp60s0.useDHCP = true;
+    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Per-interface useDHCP will be mandatory in the future, so this generated config
+    # replicates the default behaviour.
+    useDHCP = false;
+    interfaces.wlp60s0.useDHCP = true;
 
-  networking.networkmanager.enable = true;
-  # TODO: check its options
-  # Prevent nm to manage container interfaces
-  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
+    networkmanager.enable = true;
+    # TODO: check its options
+    # Prevent nm to manage container interfaces
+    networkmanager.unmanaged = [ "interface-name:ve-*" ];
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    # Configure network proxy if necessary
+    # proxy.default = "http://user:password@proxy:port/";
+    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+    # Open ports in the firewall.
+    firewall.allowedTCPPorts = [
+      # Allow spotify To sync local tracks from your filesystem with mobile
+      # devices in the same network
+      57621
+    ];
+    # firewall.allowedUDPPorts = [ ... ];
+
+    # Configure NAT for containers
+    nat.enable = false;
+    nat.internalInterfaces = [ "ve-wowcube" ];
+    nat.externalInterface = "wlp60s0";
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -82,13 +97,10 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+  };
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -147,7 +159,7 @@
   users.users.panurg = {
     description = "Alexander Abrosimov";
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "dialout" ];
     # TODO: prepare system of mutableUsers set to false and  hashedPassword (or smth)
     initialPassword = "test";
     # TODO: openssh.authorizedKeys.keys
@@ -171,6 +183,7 @@
       "org/gnome/desktop/notifications/application/spotify" = {
         application-id = "spotify.desktop";
         details-in-lock-screen = true;
+        force-expanded = true;
       };
       "org/gnome/desktop/interface" = {
         clock-show-weekday = true;
@@ -243,11 +256,13 @@
       slack-dark
       tdesktop
       ag
+      lm_sensors
     ];
     programs = {
       # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
-      # direnv or lorri, keychain, lsd, neovim, noti, ssh, zathura
+      # lorri, keychain, lsd, neovim, noti, ssh, zathura
       # TODO wayland: mako
+      direnv.enable = true;
       chromium.enable = true;
       command-not-found.enable = true;
       # dircolors.enable = true;
@@ -628,4 +643,39 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  containers = {
+    wowcube = with config.users.users.panurg; {
+      allowedDevices = [
+        { modifier = "rwm"; node = "/dev/ttyACM0"; }
+      ];
+      autoStart = true;
+      privateNetwork = true;
+      hostAddress = "10.0.0.0";
+      localAddress = "10.0.0.1";
+      bindMounts."/home/${name}/src" = {
+        hostPath = "${home}/src/CubiosV2";
+        isReadOnly = false;
+      };
+      config = {config, pkgs, ...}:
+      {
+        # networking.hostName = "wowcube";
+        environment.systemPackages = with pkgs; [
+          winePackages.stable
+          winePackages.fonts
+          winetricks
+          minicom
+        ];
+        services.openssh = {
+          enable = true;
+          forwardX11 = true;
+          passwordAuthentication = false;
+        };
+        users.users.${name} = {
+          isNormalUser = true;
+          openssh.authorizedKeys.keyFiles = [ "${home}/.ssh/id_rsa.pub" ];
+        };
+      };
+    };
+  };
 }
