@@ -661,7 +661,7 @@
   containers = {
     wowcube = with config.users.users.panurg; {
       allowedDevices = [
-        { modifier = "rwm"; node = "/dev/ttyACM0"; }
+        { modifier = "rw"; node = "/dev/ttyACM0"; }
       ];
       autoStart = true;
       privateNetwork = true;
@@ -671,9 +671,12 @@
         hostPath = "${home}/src/CubiosV2";
         isReadOnly = false;
       };
+      bindMounts."/dev_host" = {
+        hostPath = "/dev";
+        isReadOnly = false;
+      };
       config = {config, pkgs, ...}:
       {
-        # networking.hostName = "wowcube";
         environment.systemPackages = with pkgs; [
           winePackages.stable
           winePackages.fonts
@@ -688,6 +691,7 @@
         users.users.${name} = {
           isNormalUser = true;
           openssh.authorizedKeys.keyFiles = [ "${home}/.ssh/id_rsa.pub" ];
+          extraGroups = [ "dialout" ];
         };
       };
     };
