@@ -213,7 +213,21 @@
           "user-theme@gnome-shell-extensions.gcampax.github.com"
           "remove-dropdown-arrows@mpdeimos.com"
           "mprisindicatorbutton@JasonLG1979.github.io"
+          "freon@UshakovVasilii_Github.yahoo.com"
         ];
+      };
+      "org/gnome/shell/extensions/freon" = {
+        drive-utility = "none";
+        group-temperature = false;
+        group-voltage = false;
+        hot-sensors = [ "__max__" ];
+        panel-box-index = 4;
+        position-in-panel = "right";
+        show-decimal-value = false;
+        show-fan-rpm = false;
+        show-icon-on-panel = true;
+        show-voltage = false;
+        update-time = 30;
       };
     };
     gtk = {
