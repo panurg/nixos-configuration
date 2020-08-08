@@ -148,8 +148,14 @@
   # Fix for Home Manager error
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
-  # Gnome 3 needs for config
-  services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+  services.udev = {
+    extraRules = ''
+      ATTR{idVendor}=="0e8d", ATTR{idProduct}=="0003", ENV{ID_MM_DEVICE_IGNORE}="1"
+      ATTR{idVendor}=="0e8d", ATTR{idProduct}=="0023", ENV{ID_MM_DEVICE_IGNORE}="1"
+    '';
+    # Gnome 3 needs for config
+    packages = [ pkgs.gnome3.gnome-settings-daemon ];
+  };
 
   # Home Manager settings
   home-manager.useUserPackages = true;
@@ -661,7 +667,7 @@
   containers = {
     wowcube = with config.users.users.panurg; {
       allowedDevices = [
-        { modifier = "rw"; node = "/dev/ttyACM0"; }
+        { modifier = "rw"; node = "char-ttyACM"; }
       ];
       autoStart = true;
       privateNetwork = true;
@@ -683,6 +689,9 @@
           winetricks
           minicom
         ];
+        environment.sessionVariables = {
+          TERM="xterm";
+        };
         services.openssh = {
           enable = true;
           forwardX11 = true;
