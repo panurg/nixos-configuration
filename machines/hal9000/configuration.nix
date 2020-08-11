@@ -41,7 +41,10 @@
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
-    interfaces.wlp60s0.useDHCP = true;
+    interfaces = {
+      wlp60s0.useDHCP = true;
+      enp57s0u1u4u3.useDHCP = true;
+    };
 
     networkmanager.enable = true;
     # TODO: check its options
