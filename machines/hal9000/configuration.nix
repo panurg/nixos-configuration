@@ -205,13 +205,49 @@
       };
       "org/gnome/desktop/wm/preferences" = {
         focus-mode = "sloppy";
+        num-workspaces = 8;
+      };
+      "org/gnome/desktop/wm/keybindings" = {
+        begin-resize = [ "<Super>r" ];
+        close = [ "<Shift><Super>c" ];
+        switch-to-workspace-1 = [ "<Super>1" ];
+        switch-to-workspace-2 = [ "<Super>2" ];
+        switch-to-workspace-3 = [ "<Super>3" ];
+        switch-to-workspace-4 = [ "<Super>4" ];
+        switch-to-workspace-5 = [ "<Super>5" ];
+        switch-to-workspace-6 = [ "<Super>6" ];
+        switch-to-workspace-7 = [ "<Super>7" ];
+        switch-to-workspace-8 = [ "<Super>8" ];
+        move-to-workspace-1 = [ "<Super><Shift>1" ];
+        move-to-workspace-2 = [ "<Super><Shift>2" ];
+        move-to-workspace-3 = [ "<Super><Shift>3" ];
+        move-to-workspace-4 = [ "<Super><Shift>4" ];
+        move-to-workspace-5 = [ "<Super><Shift>5" ];
+        move-to-workspace-6 = [ "<Super><Shift>6" ];
+        move-to-workspace-7 = [ "<Super><Shift>7" ];
+        move-to-workspace-8 = [ "<Super><Shift>8" ];
+        toggle-maximized = [ "<Super>f" ];
       };
       "org/gnome/settings-daemon/plugins/power" = {
         power-button-action = "hibernate";
         sleep-inactive-ac-type = "blank";
       };
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        binding = "<Super>Return";
+        command = "urxvt";
+        name = "Launch terminal";
+      };
       "org/gnome/GWeather" = {
         temperature-unit = "centigrade";
+      };
+      "org/gnome/gedit/preferences/editor" = {
+        editor-font = "PragmataPro Mono 12";
+        scheme = "solarized-light";
+        use-default-font = false;
+      };
+      "org/gnome/mutter/keybindings" ={
+        toggle-tiled-left = [ "<Shift><Super>h" ];
+        toggle-tiled-right = [ "<Shift><Super>l" ];
       };
       "org/gnome/shell" = {
         always-show-log-out = true;
@@ -222,12 +258,23 @@
           "freon@UshakovVasilii_Github.yahoo.com"
         ];
       };
+      "org/gnome/shell/keybindings" = {
+        switch-to-application-1 = [];
+        switch-to-application-2 = [];
+        switch-to-application-3 = [];
+        switch-to-application-4 = [];
+        switch-to-application-5 = [];
+        switch-to-application-6 = [];
+        switch-to-application-7 = [];
+        switch-to-application-8 = [];
+        switch-to-application-9 = [];
+      };
       "org/gnome/shell/extensions/freon" = {
         drive-utility = "none";
         group-temperature = false;
         group-voltage = false;
         hot-sensors = [ "__max__" ];
-        panel-box-index = 4;
+        panel-box-index = 3;
         position-in-panel = "right";
         show-decimal-value = false;
         show-fan-rpm = false;
@@ -270,6 +317,7 @@
     home.packages = with pkgs; [
       gnome3.gnome-tweak-tool
       gnome3.evince
+      gnome3.dconf-editor
       gnomeExtensions.mpris-indicator-button
       gnomeExtensions.remove-dropdown-arrows
       spotify
@@ -277,6 +325,8 @@
       tdesktop
       ag
       lm_sensors
+      p7zip
+      file
     ];
     programs = {
       # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
