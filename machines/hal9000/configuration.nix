@@ -336,6 +336,7 @@
       p7zip
       unrar
       file
+      meld
     ];
     programs = {
       # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
@@ -347,7 +348,17 @@
       # dircolors.enable = true;
       feh.enable = true;
       fzf.enable = true;
-      git.enable = true;
+      git = {
+        enable = true;
+        # TODO: use common config section instead for user setup
+        userEmail = "alexander.n.abrosimov@gmail.com";
+        userName = "Alexander Abrosimov";
+        extraConfig = {
+          merge.tool = "meld";
+          stash.showPatch = true;
+          color.ui = "auto";
+        };
+      };
       lesspipe.enable = true; # ???
       mpv = {
         enable = true;
