@@ -334,6 +334,7 @@
       ag
       lm_sensors
       p7zip
+      unrar
       file
     ];
     programs = {
