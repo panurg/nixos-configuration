@@ -81,12 +81,17 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim git
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      vim git
+    ];
+    # Enable ZSH as an interactive shell
+    shells = [ pkgs.zsh ];
 
-  # Enable ZSH as an interactive shell
-  environment.shells = [ pkgs.zsh ];
+    variables = {
+      EDITOR = "vim";
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -337,11 +342,27 @@
       unrar
       file
       meld
+      fd
     ];
     programs = {
-      # TODO: check out autorandr or grobi, bat, broot, beets, browserpass or pass,
+      # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,
       # lorri, keychain, lsd, neovim, noti, ssh, zathura
       # TODO wayland: mako
+      bat = {
+        enable = true;
+        config = {
+          theme = "gruvbox";
+          italic-text = "always";
+        };
+        themes = {
+          gruvbox = builtins.readFile (pkgs.fetchFromGitHub {
+            owner = "Briles";
+            repo = "gruvbox";
+            rev = "e69df8f31e3dfd1546d53d19a2fd6ec873bd75f1";
+            sha256 = "08h24nn8nw1jgqfrp1gv1ax8rs0zqnrz882whgh1n6khzf67hdpi";
+          } + "/gruvbox (Dark) (Soft).tmTheme");
+        };
+      };
       direnv.enable = true;
       chromium.enable = true;
       command-not-found.enable = true;
@@ -357,20 +378,61 @@
           merge.tool = "meld";
           stash.showPatch = true;
           color.ui = "auto";
+          core.untrackedCache = true;
         };
       };
-      lesspipe.enable = true; # ???
       mpv = {
         enable = true;
         scripts = [ pkgs.mpvScripts.mpris ];
       };
-      tmux.enable = true;
+      tmux = {
+        enable = true;
+        baseIndex = 1;
+        clock24 = true;
+        customPaneNavigationAndResize = true;
+        escapeTime = 300;
+        extraConfig = ''
+          set-option -g prefix `
+          unbind-key C-b
+          bind-key ` send-prefix
+          bind-key R source-file ~/.tmux.conf
+          set-option -g mouse on
+          set-option -g allow-rename off
+          set-option -g status on
+          set-option -g status-interval 0
+          set-option -g status-justify left
+          set-option -g status-position bottom
+          set-option -g status-style bg=black,fg=white
+          set-option -g status-left " #[bold]#S#[default]  #{pane_current_command} #[bg=black,fg=brightblack]"
+          set-option -g status-left-style bg=brightblack,fg=brightwhite
+          set-option -g status-left-length 30
+          set-option -g status-right "#[bg=black,fg=brightblack]#[default] #h "
+          set-option -g status-right-style bg=brightblack,fg=brightwhite
+          set-option -g window-status-current-format " #I#F #W #[bg=black,fg=yellow]"
+          set-option -g window-status-current-style bg=yellow,fg=black
+          set-option -g window-status-format " #I#F #W "
+          set-option -g window-status-separator ""
+          set-option -g pane-active-border-style fg=yellow
+        '';
+        historyLimit = 50000;
+        keyMode = "vi";
+        newSession = true;
+        # TODO check tmux plugins
+        terminal = "xterm-256color";
+        tmuxinator.enable = true;
+      };
       urxvt = {
         enable = true;
         fonts = [
-          "xft:PragmataPro:size=12"
+          "xft:PragmataPro Mono:size=12"
+          "xft:MesloLGS NF:size=10"
         ];
         scroll.bar.enable = false;
+        extraConfig = {
+          iconFile = "${pkgs.numix-icon-theme-circle}/share/icons/Numix-Circle/48/apps/utilities-terminal.svg";
+          italicFont = "xft:PragmataPro Mono:style=italic:size=12";
+          boldItalicFont = "xft:PragmataPro Mono:style=bold italic:size=12";
+        };
       };
       vim = {
         enable = true;
@@ -416,7 +478,7 @@
 
           " GUI options
           if has('gui_running')
-            set guioptions=aAP
+            set guioptions=aAPi
             set guifont=PragmataPro\ Mono\ 12
           else
             set t_Co=256
@@ -425,6 +487,7 @@
           " colors
           let g:gruvbox_contrast_dark='soft'
           let g:gruvbox_invert_selection=0
+          let g:gruvbox_italic=1
           let g:gruvbox_italicize_strings=1
           colorscheme gruvbox
 
@@ -630,19 +693,38 @@
         enable = true;
         oh-my-zsh = {
           enable = true;
-          plugins = [ "git" "npm" "tmux" "tmuxinator" "autojump" "vi-mode" ];
-          theme = "kolo";
+          plugins = [
+            "git"
+            "tmux"
+            "tmuxinator"
+            "z"
+            "vi-mode"
+            "safe-paste"
+            "fd"
+          ];
+          theme = "";
         };
         localVariables = {
           DISABLE_AUTO_TITLE = true;
-          ENABLE_CORRECTION = true;
           COMPLETION_WAITING_DOTS = true;
         };
         sessionVariables = {
         };
         shellAliases = {
-          mux = "tmuxinator";
+          diff = "diff -u --color";
         };
+        plugins = [
+          {
+            name = "powerlevel10k";
+            src = pkgs.zsh-powerlevel10k;
+            file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+          }
+          {
+            name = "powerlevel10k-config";
+            src = lib.cleanSource ./p10k-config;
+            file = "p10k.zsh";
+          }
+        ];
       };
     };
     services = {
@@ -650,7 +732,6 @@
       # spotifyd, syncthing, udiskie, unclutter, XSuspender
     };
     systemd.user.sessionVariables = {
-      EDITOR = "vim";
     };
     # TODO: check out wayland configuration: sway
     xdg = {
@@ -759,7 +840,7 @@
           winetricks
           minicom
         ];
-        environment.sessionVariables = {
+        environment.variables = {
           TERM="xterm";
         };
         services.openssh = {
