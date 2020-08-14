@@ -343,6 +343,8 @@
       file
       meld
       fd
+      nodejs
+      clang-tools
     ];
     programs = {
       # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,
@@ -440,13 +442,13 @@
         plugins = with pkgs.vimPlugins; [
           tcomment_vim
           gruvbox
-          YouCompleteMe
           vim-fugitive
           vim-airline
           vim-indent-guides
           vim-exchange
           vim-highlightedyank
           vim-gitgutter
+          coc-nvim
         ];
         settings = {
           history = 1000;
@@ -618,11 +620,6 @@
             set clipboard+=unnamedplus
           endif
 
-          " YouCompleteMe
-          let g:ycm_add_preview_to_completeopt=1
-          " let g:ycm_autoclose_preview_window_after_insertion=1
-          map <silent> <Leader>yg :YcmCompleter GoTo<CR>
-
           " Airline
           " Always show airline
           set laststatus=2
@@ -687,6 +684,29 @@
 
           " gitgutter
           set updatetime=100
+
+          " coc-nvim
+          " don't pass messages to |ins-completion-menu|
+          set shortmess+=c
+          " merge signcolumn and number column into one
+          set signcolumn=number
+          " use tab for trigger completion with characters ahead and navigate
+          inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+          inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+          function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+          endfunction
+          " use <c-space> to trigger completion
+          inoremap <silent><expr> <c-@> coc#refresh()
+          " use <cr> to confirm completion, `<C-g>u` means break undo chain at
+          " current position
+          inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+          " highlight the symbol and its references when holding the curso.
+          autocmd CursorHold * silent call CocActionAsync('highlight')
         '';
       };
       zsh = {
