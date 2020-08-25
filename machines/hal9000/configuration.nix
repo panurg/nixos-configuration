@@ -31,6 +31,22 @@
     };
   };
 
+  boot.kernelParams = [
+    "i915.enable_fbc=1"
+    # "i915.enable_psr=2"
+  ];
+
+  boot.initrd.kernelModules = [ "i915" ];
+
+  boot.blacklistedKernelModules = [ "psmouse" ];
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 1;
+  };
+
+  hardware.cpu.intel.updateMicrocode =
+    config.hardware.enableRedistributableFirmware;
+
   fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
   fileSystems."/home".options = [ "noatime" "nodiratime" "discard" ];
 
@@ -131,6 +147,7 @@
     # libvdpau-va-gl
     intel-media-driver
   ];
+  hardware.enableRedistributableFirmware = true;
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -166,7 +183,7 @@
   # hardware.opengl.driSupport32Bit = true;
 
   # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Fix for Home Manager error
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
@@ -179,6 +196,12 @@
     # Gnome 3 needs for config
     packages = [ pkgs.gnome3.gnome-settings-daemon ];
   };
+
+  services.tlp.enable = true;
+
+  services.fstrim.enable = true;
+
+  services.thermald.enable = true;
 
   # Home Manager settings
   home-manager.useUserPackages = true;
@@ -851,14 +874,7 @@
     ];
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: with pkgs; {
-      chromium = chromium.override {
-        enableVaapi = true;
-      };
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
 
   containers = {
     wowcube = with config.users.users.panurg; {
