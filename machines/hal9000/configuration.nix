@@ -300,7 +300,6 @@
         enabled-extensions = [
           "user-theme@gnome-shell-extensions.gcampax.github.com"
           "remove-dropdown-arrows@mpdeimos.com"
-          "mprisindicatorbutton@JasonLG1979.github.io"
           "freon@UshakovVasilii_Github.yahoo.com"
         ];
       };
@@ -364,7 +363,6 @@
       gnome3.gnome-tweak-tool
       gnome3.evince
       gnome3.dconf-editor
-      gnomeExtensions.mpris-indicator-button
       gnomeExtensions.remove-dropdown-arrows
       spotify
       slack-dark
