@@ -889,9 +889,15 @@
       privateNetwork = true;
       hostAddress = "10.0.0.0";
       localAddress = "10.0.0.1";
-      bindMounts."/home/${name}/src" = {
-        hostPath = "${home}/src/CubiosV2";
-        isReadOnly = false;
+      bindMounts = {
+        "${home}/src/CubiosV2" = {
+          hostPath = "${home}/src/CubiosV2";
+          isReadOnly = false;
+        };
+        "${home}/src/ResourcesV2" = {
+          hostPath = "${home}/src/ResourcesV2";
+          isReadOnly = false;
+        };
       };
       bindMounts."/dev_host" = {
         hostPath = "/dev";
@@ -899,11 +905,17 @@
       };
       config = {config, pkgs, ...}:
       {
-        environment.systemPackages = with pkgs; [
+        environment.systemPackages = with pkgs; let
+          pawn = callPackage ./pawn.nix {};
+        in [
           winePackages.stable
           winePackages.fonts
           winetricks
           minicom
+          (python2.withPackages (ps: with ps; [ intelhex pillow pyserial ]))
+          nodejs
+          pawn
+          gnumake
         ];
         environment.variables = {
           TERM="xterm";
