@@ -71,8 +71,10 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
   console = {
-    # font = "Lat2-Terminus16";
+    earlySetup = true;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
     keyMap = "us";
   };
 
@@ -90,6 +92,7 @@
 
     variables = {
       EDITOR = "vim";
+      LIBVA_DRIVER_NAME="iHD";
     };
   };
 
@@ -121,6 +124,13 @@
     extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
   hardware.bluetooth.enable = true;
+  hardware.sensor.iio.enable = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    # vaapiIntel
+    # vaapiVdpau
+    # libvdpau-va-gl
+    intel-media-driver
+  ];
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -132,7 +142,7 @@
     # modules = [ pkgs.xf86_input_wacom ];
     # wacom.enable = true;
     # xautolock.enable = true;
-    # videoDrivers = [ "intel" ]
+    videoDrivers = [ "intel" ];
     # Auto login in case of disk encryption
     # displayManager = {
     #   defaultSession = "none+i3";
@@ -366,7 +376,10 @@
         };
       };
       direnv.enable = true;
-      chromium.enable = true;
+      chromium = {
+        enable = true;
+        # package = pkgs.chromium.override { enableVaapi = true; };
+      };
       command-not-found.enable = true;
       # dircolors.enable = true;
       feh.enable = true;
@@ -386,6 +399,11 @@
       mpv = {
         enable = true;
         scripts = [ pkgs.mpvScripts.mpris ];
+        config = {
+          hwdec = "auto-safe";
+          vo = "gpu";
+          profile = "gpu-hq";
+        };
       };
       tmux = {
         enable = true;
@@ -833,7 +851,14 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: with pkgs; {
+      chromium = chromium.override {
+        enableVaapi = true;
+      };
+    };
+  };
 
   containers = {
     wowcube = with config.users.users.panurg; {
