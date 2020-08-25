@@ -727,8 +727,6 @@
           " coc-nvim
           " don't pass messages to |ins-completion-menu|
           set shortmess+=c
-          " merge signcolumn and number column into one
-          set signcolumn=number
           " use tab for trigger completion with characters ahead and navigate
           inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
@@ -746,6 +744,14 @@
           inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
           " highlight the symbol and its references when holding the curso.
           autocmd CursorHold * silent call CocActionAsync('highlight')
+          " use `[g` and `]g` to navigate diagnostics
+          nmap <silent> [g <Plug>(coc-diagnostic-prev)
+          nmap <silent> ]g <Plug>(coc-diagnostic-next)
+          " GoTo code navigation.
+          nmap <silent> gd <Plug>(coc-definition)
+          nmap <silent> gy <Plug>(coc-type-definition)
+          nmap <silent> gi <Plug>(coc-implementation)
+          nmap <silent> gr <Plug>(coc-references)
         '';
       };
       zsh = {
