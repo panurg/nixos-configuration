@@ -180,7 +180,7 @@
   };
   # services.xserver.xkbOptions = "eurosign:e";
   # On 64-bit systems, if you want OpenGL for 32-bit programs such as in Wine, you should also set the following:
-  # hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.driSupport32Bit = true;
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
@@ -202,6 +202,8 @@
   services.fstrim.enable = true;
 
   services.thermald.enable = true;
+
+  powerManagement.powertop.enable = true;
 
   # Home Manager settings
   home-manager.useUserPackages = true;
@@ -376,6 +378,9 @@
       fd
       nodejs
       clang-tools
+      gnome3.pomodoro
+      libreoffice
+      steam
     ];
     programs = {
       # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,
@@ -916,6 +921,7 @@
           nodejs
           pawn
           gnumake
+          lsof
         ];
         environment.variables = {
           TERM="xterm";
