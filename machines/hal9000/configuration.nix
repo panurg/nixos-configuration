@@ -376,6 +376,7 @@
       gnome3.pomodoro
       libreoffice
       steam
+      darktable
     ];
     programs = {
       # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,
