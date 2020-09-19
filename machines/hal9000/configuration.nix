@@ -44,6 +44,8 @@
     "vm.swappiness" = 1;
   };
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   hardware.cpu.intel.updateMicrocode =
     config.hardware.enableRedistributableFirmware;
 
@@ -241,7 +243,7 @@
       };
       "org/gnome/desktop/interface" = {
         clock-show-weekday = true;
-        show-battery-percentage = true;
+        show-battery-percentage = false;
         cursor-theme = config.xsession.pointerCursor.name;
         cursor-size = config.xsession.pointerCursor.size;
       };
@@ -306,15 +308,15 @@
         ];
       };
       "org/gnome/shell/keybindings" = {
-        switch-to-application-1 = [];
-        switch-to-application-2 = [];
-        switch-to-application-3 = [];
-        switch-to-application-4 = [];
-        switch-to-application-5 = [];
-        switch-to-application-6 = [];
-        switch-to-application-7 = [];
-        switch-to-application-8 = [];
-        switch-to-application-9 = [];
+        switch-to-application-1 = [ "<Super>F1" ];
+        switch-to-application-2 = [ "<Super>F2" ];
+        switch-to-application-3 = [ "<Super>F3" ];
+        switch-to-application-4 = [ "<Super>F4" ];
+        switch-to-application-5 = [ "<Super>F5" ];
+        switch-to-application-6 = [ "<Super>F6" ];
+        switch-to-application-7 = [ "<Super>F7" ];
+        switch-to-application-8 = [ "<Super>F8" ];
+        switch-to-application-9 = [ "<Super>F9" ];
       };
       "org/gnome/shell/extensions/freon" = {
         drive-utility = "none";
