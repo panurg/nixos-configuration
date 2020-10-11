@@ -239,6 +239,7 @@
         show-battery-percentage = false;
         cursor-theme = config.xsession.pointerCursor.name;
         cursor-size = config.xsession.pointerCursor.size;
+        monospace-font-name = "PragmataPro Mono 12";
       };
       "org/gnome/desktop/privacy" = {
         report-technical-problems = false;
@@ -249,6 +250,7 @@
       "org/gnome/desktop/wm/preferences" = {
         focus-mode = "sloppy";
         num-workspaces = 8;
+        auto-raise = true;
       };
       "org/gnome/desktop/wm/keybindings" = {
         begin-resize = [ "<Super>r" ];
@@ -275,10 +277,23 @@
         power-button-action = "hibernate";
         sleep-inactive-ac-type = "blank";
       };
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        ];
+      };
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         binding = "<Super>Return";
         command = "urxvt";
         name = "Launch terminal";
+      };
+      "org/gnome/settings-daemon/plugins/color" = {
+        night-light-enabled = true;
+        night-light-temperature = mkUint32(4360);
+      };
+      "org/gnome/settings-daemon/plugins/xsettings" = {
+        antialiasing = "rgba";
+        hinting = "full";
       };
       "org/gnome/GWeather" = {
         temperature-unit = "centigrade";
@@ -286,7 +301,7 @@
       "org/gnome/gedit/preferences/editor" = {
         editor-font = "PragmataPro Mono 12";
         scheme = "solarized-light";
-        use-default-font = false;
+        use-default-font = true;
       };
       "org/gnome/mutter/keybindings" ={
         toggle-tiled-left = [ "<Shift><Super>h" ];
@@ -298,6 +313,7 @@
           "user-theme@gnome-shell-extensions.gcampax.github.com"
           "remove-dropdown-arrows@mpdeimos.com"
           "freon@UshakovVasilii_Github.yahoo.com"
+          "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
         ];
       };
       "org/gnome/shell/keybindings" = {
@@ -323,6 +339,14 @@
         show-icon-on-panel = true;
         show-voltage = false;
         update-time = 30;
+      };
+      "org/gnome/shell/extensions/auto-move-windows" = {
+        application-list = [
+          "slack.desktop:5"
+          "telegramdesktop.desktop:5"
+          "spotify.desktop:8"
+          "steam.desktop:7"
+        ];
       };
     };
     gtk = {
