@@ -115,10 +115,10 @@
       "org/gnome/shell" = {
         always-show-log-out = true;
         enabled-extensions = [
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
           "remove-dropdown-arrows@mpdeimos.com"
           "freon@UshakovVasilii_Github.yahoo.com"
           "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
+          "activities-config@nls1729"
         ];
       };
       "org/gnome/shell/keybindings" = {
@@ -152,6 +152,19 @@
           "spotify.desktop:8"
           "steam.desktop:7"
         ];
+      };
+      "org/gnome/shell/extensions/activities-config" = {
+        activities-config-button-icon-path = "${pkgs.numix-icon-theme-circle}/share/icons/Numix-Circle/48/apps/distributor-logo-nixos.svg";
+        activities-config-button-no-text = true;
+        activities-icon-padding = 0;
+        activities-icon-scale-factor = 1.4;
+        activities-text-padding = 0;
+        enable-conflict-detection = true;
+        maximized-window-effect = 0;
+        panel-background-color-hex-rgb = "#434343"; # Numix base bg color
+        panel-hide-rounded-corners = true;
+        show-overview = true;
+        transparent-panel = 0;
       };
     };
     gtk = {
