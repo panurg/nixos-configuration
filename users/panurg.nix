@@ -594,7 +594,7 @@
             "tmuxinator"
             "z"
             "vi-mode"
-            "safe-paste"
+            # "safe-paste"
             "fd"
           ];
           theme = "";
