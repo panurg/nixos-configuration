@@ -26,7 +26,7 @@
         };
       };
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "coretemp" ];
     extraModulePackages = [ ];
 
     loader = {
