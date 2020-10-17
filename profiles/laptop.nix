@@ -52,6 +52,11 @@
 
   services.thermald.enable = true;
 
+  services.smartd.notifications = {
+    x11.enable = true;
+    x11.display = ":1";
+  };
+
   powerManagement.powertop.enable = true;
 
   fonts = {

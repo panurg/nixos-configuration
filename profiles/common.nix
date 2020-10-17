@@ -43,6 +43,8 @@
     passwordAuthentication = false;
   };
 
+  services.smartd.enable = true;
+
   hardware.enableRedistributableFirmware = true;
 
   home-manager.useUserPackages = true;
