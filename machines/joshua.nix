@@ -9,99 +9,66 @@
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     <home-manager/nixos>
     ../profiles/common.nix
-    ../profiles/wowcube.nix
-    ../profiles/laptop.nix
+    ../profiles/htpc.nix
     ../profiles/home-manager.nix
     ../users/panurg-base.nix
-    ../users/panurg-desktop.nix
   ];
 
   boot = {
-    initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-      kernelModules = [ "dm-snapshot" "i915" ];
-      luks.devices = {
-        tank = {
-          allowDiscards = true;
-          device = "/dev/disk/by-uuid/f15b264a-b675-42c3-b240-da9e51db7139";
-          fallbackToPassword = true;
-        };
-      };
-    };
+    initrd.availableKernelModules = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" ];
+    # TODO: check if coretemp is needed
     kernelModules = [ "kvm-intel" "coretemp" ];
-    extraModulePackages = [ ];
 
     loader = {
       efi = {
         efiSysMountPoint = "/boot/efi";
+        canTouchEfiVariables = true;
       };
       grub = {
         efiSupport = true;
         device = "nodev";
-        enableCryptodisk = true;
       };
     };
 
-    kernelParams = [
-      "i915.enable_fbc=1"
-      # "i915.enable_psr=2"
-    ];
+    kernelParams = ["zfs.zfs_arc_max=15032385536"];
 
     blacklistedKernelModules = [ "psmouse" ];
 
     kernel.sysctl = {
       "vm.swappiness" = 1;
     };
+
+    supportedFilesystems = [ "zfs" ];
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/78f0b518-e252-418a-9520-dfaec58244db";
+      device = "/dev/disk/by-uuid/e03966ed-52bb-448f-9034-fd4baca60dec";
       fsType = "ext4";
-      options = [ "noatime" "nodiratime" "discard" ];
-    };
-
-    "/home" = {
-      device = "/dev/disk/by-uuid/b27db1cb-405d-4ac4-bb4a-e36343a7d4af";
-      fsType = "ext4";
-      options = [ "noatime" "nodiratime" "discard" ];
     };
 
     "/boot/efi" = {
-      device = "/dev/disk/by-uuid/321B-8DA8";
+      device = "/dev/disk/by-uuid/62B1-9535";
       fsType = "vfat";
+    };
+
+    "/home" = {
+      device = "tank/home";
+      fsType = "zfs";
     };
   };
 
   swapDevices = [
-    { device = "/dev/disk/by-uuid/cc822852-560d-4ccb-9487-794ee9e40c93"; }
+    { device = "/dev/disk/by-uuid/114610ff-09df-406c-82aa-2f0c7740a6b7"; }
   ];
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
-
-  hardware.cpu.intel.updateMicrocode =
-    config.hardware.enableRedistributableFirmware;
-
   networking = {
-    hostName = "hal9000"; # Define your hostname.
-    nat.externalInterface = "wlp60s0";
+    hostName = "joshua";
+    hostId = "fc50d667";
   };
-
-  environment.variables = {
-    LIBVA_DRIVER_NAME = "iHD";
-  };
-
-  hardware.opengl.extraPackages = with pkgs; [
-    # vaapiIntel
-    # vaapiVdpau
-    # libvdpau-va-gl
-    intel-media-driver
-  ];
-
-  services.xserver.videoDrivers = [ "intel" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -110,4 +77,10 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03"; # Did you read the comment?
+
+  services.zfs = {
+    autoScrub.enable = true;
+    autoSnapshot.enable = true;
+  };
 }
+

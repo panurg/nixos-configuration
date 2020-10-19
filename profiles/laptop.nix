@@ -48,8 +48,6 @@
 
   services.tlp.enable = true;
 
-  services.fstrim.enable = true;
-
   services.thermald.enable = true;
 
   services.smartd.notifications = {

@@ -18,9 +18,8 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
-    earlySetup = true;
-    font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
     keyMap = "us";
+    earlySetup = true;
   };
 
   time.timeZone = "Europe/Moscow";
@@ -44,11 +43,9 @@
   };
 
   services.smartd.enable = true;
+  services.fstrim.enable = true;
 
   hardware.enableRedistributableFirmware = true;
-
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
 
   system.autoUpgrade.enable = true;
   # system.autoUpgrade.allowReboot = true;
