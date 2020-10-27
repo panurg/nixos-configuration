@@ -193,6 +193,7 @@
       steam
       darktable
       gimp
+      inkscape
     ];
     programs = {
       # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,
@@ -203,7 +204,7 @@
         # package = pkgs.chromium.override { enableVaapi = true; };
       };
       # dircolors.enable = true;
-      feh.enable = true;
+      # feh.enable = true;
       git.extraConfig.merge.tool = "meld";
       mpv = {
         enable = true;
