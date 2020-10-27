@@ -12,12 +12,13 @@
     ../profiles/htpc.nix
     ../profiles/home-manager.nix
     ../users/panurg-base.nix
+    ../users/tv.nix
   ];
 
   boot = {
     initrd.availableKernelModules = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" ];
     # TODO: check if coretemp is needed
-    kernelModules = [ "kvm-intel" "coretemp" ];
+    kernelModules = [ "kvm-intel" "coretemp" "i915" ];
 
     loader = {
       efi = {
@@ -30,7 +31,11 @@
       };
     };
 
-    kernelParams = ["zfs.zfs_arc_max=15032385536"];
+    kernelParams = [
+      "zfs.zfs_arc_max=15032385536"
+      "i915.enable_fbc=1"
+      "i915.enable_guc=2"
+    ];
 
     blacklistedKernelModules = [ "psmouse" ];
 
@@ -63,12 +68,17 @@
   ];
 
   nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   networking = {
     hostName = "joshua";
     hostId = "fc50d667";
   };
+
+  hardware.cpu.intel.updateMicrocode =
+    config.hardware.enableRedistributableFirmware;
+
+  hardware.opengl.extraPackages = with pkgs; [ vaapiIntel ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -81,6 +91,17 @@
   services.zfs = {
     autoScrub.enable = true;
     autoSnapshot.enable = true;
+  };
+
+  services.xserver.videoDrivers = [ "intel" ];
+
+  sound = {
+    enable = true;
+    extraConfig = ''
+      defaults.pcm.card 0
+      defaults.pcm.device 3
+      defaults.ctl.card 0
+    '';
   };
 }
 
