@@ -38,12 +38,15 @@
       size = 48;
     };
 
-    home.packages = with pkgs; [
+    home.packages = with pkgs; let
+      pop-shell = callPackage ../packages/pop-shell { };
+    in [
       gnome3.gnome-tweak-tool
       gnome3.evince
       gnome3.dconf-editor
       dconf2nix
       gnomeExtensions.remove-dropdown-arrows
+      pop-shell
       spotify
       slack-dark
       tdesktop

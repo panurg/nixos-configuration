@@ -90,6 +90,19 @@
       switch-to-workspace-7 = [ "<Super>7" ];
       switch-to-workspace-8 = [ "<Super>8" ];
       toggle-maximized = [ "<Super>f" ];
+      minimize = [ "<Super>comma" ];
+      move-to-monitor-left = [];
+      move-to-monitor-right = [];
+      move-to-monitor-up = [];
+      move-to-monitor-down = [];
+      move-to-workspace-down = [];
+      move-to-workspace-up = [];
+      switch-to-workspace-left = [];
+      switch-to-workspace-right = [];
+      switch-to-workspace-down = [];
+      switch-to-workspace-up = [];
+      switch-input-source = [];
+      switch-input-source-backward = [];
     };
 
     "org/gnome/desktop/wm/preferences" = {
@@ -113,11 +126,12 @@
     "org/gnome/mutter" = {
       dynamic-workspaces = false;
       focus-change-on-pointer-rest = true;
+      workspaces-only-on-primary = false;
     };
 
     "org/gnome/mutter/keybindings" = {
-      toggle-tiled-left = [ "<Shift><Super>h" ];
-      toggle-tiled-right = [ "<Shift><Super>l" ];
+      toggle-tiled-left = [];
+      toggle-tiled-right = [];
     };
 
     "org/gnome/nautilus/preferences" = {
@@ -136,6 +150,8 @@
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+      screensaver = [ "<Super>Escape" ];
+      rotate-video-lock-static = [];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -161,6 +177,7 @@
         "freon@UshakovVasilii_Github.yahoo.com"
         "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
         "activities-config@nls1729"
+        "pop-shell@system76.com"
       ];
       favorite-apps = [
         "chrome-djeeobknjeechdoljfdmkojhlapmmpnd-Default.desktop"
@@ -210,6 +227,20 @@
       update-time = 30;
     };
 
+    "org/gnome/shell/extensions/pop-shell" = {
+      active-hint = true;
+      gap-inner = mkUint32(6);
+      gap-outer = mkUint32(6);
+      show-title = false;
+      smart-gaps = true;
+      tile-by-default = true;
+      tile-enter = [ "<Super>Space" ];
+      tile-accept = [ "Space" ];
+      pop-monitor-left = [ "<Super><Shift><Control>h" ];
+      pop-monitor-right = [ "<Super><Shift><Control>l" ];
+      hint-color-rgba = mkTuple [240 84 76 1];
+    };
+
     "org/gnome/shell/keybindings" = {
       switch-to-application-1 = [ "<Super>F1" ];
       switch-to-application-2 = [ "<Super>F2" ];
@@ -220,6 +251,8 @@
       switch-to-application-7 = [ "<Super>F7" ];
       switch-to-application-8 = [ "<Super>F8" ];
       switch-to-application-9 = [ "<Super>F9" ];
+      open-application-menu = [];
+      toggle-message-tray = [ "<Super>v" ];
     };
   };
 }
