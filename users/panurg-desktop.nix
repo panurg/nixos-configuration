@@ -201,7 +201,7 @@
       # TODO wayland: mako
       chromium = {
         enable = true;
-        # package = pkgs.chromium.override { enableVaapi = true; };
+        package = pkgs.chromium.override { enableVaapi = true; };
       };
       # dircolors.enable = true;
       # feh.enable = true;
