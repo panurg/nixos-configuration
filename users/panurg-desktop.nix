@@ -10,153 +10,10 @@
   };
 
   home-manager.users.panurg = { pkgs, config, lib, ... }: {
-    dconf.settings = with lib.hm.gvariant; {
-      "org/gnome/desktop/peripherals/touchpad" = {
-        speed = 0.65;
-        tap-to-click = true;
-        two-finger-scrolling-enabled = true;
-      };
-      "org/gnome/desktop/input-sources" = {
-        current = mkUint32(0);
-        sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "ru" ]) ];
-        xkb-options = [ "terminate:ctrl_alt_bksp" "grp:caps_toggle" ];
-      };
-      "org/gnome/desktop/calendar" = {
-        show-weekdate = true;
-      };
-      "org/gnome/desktop/notifications/application/spotify" = {
-        application-id = "spotify.desktop";
-        details-in-lock-screen = true;
-        force-expanded = true;
-      };
-      "org/gnome/desktop/interface" = {
-        clock-show-weekday = true;
-        show-battery-percentage = false;
-        cursor-theme = config.xsession.pointerCursor.name;
-        cursor-size = config.xsession.pointerCursor.size;
-        monospace-font-name = "PragmataPro Mono 12";
-      };
-      "org/gnome/desktop/privacy" = {
-        report-technical-problems = false;
-      };
-      "org/gnome/desktop/session" ={
-        idle-delay = mkUint32(900);
-      };
-      "org/gnome/desktop/wm/preferences" = {
-        focus-mode = "sloppy";
-        num-workspaces = 8;
-        auto-raise = true;
-      };
-      "org/gnome/desktop/wm/keybindings" = {
-        begin-resize = [ "<Super>r" ];
-        close = [ "<Shift><Super>c" ];
-        switch-to-workspace-1 = [ "<Super>1" ];
-        switch-to-workspace-2 = [ "<Super>2" ];
-        switch-to-workspace-3 = [ "<Super>3" ];
-        switch-to-workspace-4 = [ "<Super>4" ];
-        switch-to-workspace-5 = [ "<Super>5" ];
-        switch-to-workspace-6 = [ "<Super>6" ];
-        switch-to-workspace-7 = [ "<Super>7" ];
-        switch-to-workspace-8 = [ "<Super>8" ];
-        move-to-workspace-1 = [ "<Super><Shift>1" ];
-        move-to-workspace-2 = [ "<Super><Shift>2" ];
-        move-to-workspace-3 = [ "<Super><Shift>3" ];
-        move-to-workspace-4 = [ "<Super><Shift>4" ];
-        move-to-workspace-5 = [ "<Super><Shift>5" ];
-        move-to-workspace-6 = [ "<Super><Shift>6" ];
-        move-to-workspace-7 = [ "<Super><Shift>7" ];
-        move-to-workspace-8 = [ "<Super><Shift>8" ];
-        toggle-maximized = [ "<Super>f" ];
-      };
-      "org/gnome/settings-daemon/plugins/power" = {
-        power-button-action = "hibernate";
-        sleep-inactive-ac-type = "blank";
-      };
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        ];
-      };
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        binding = "<Super>Return";
-        command = "urxvt";
-        name = "Launch terminal";
-      };
-      "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
-        night-light-temperature = mkUint32(4360);
-      };
-      "org/gnome/settings-daemon/plugins/xsettings" = {
-        antialiasing = "rgba";
-        hinting = "full";
-      };
-      "org/gnome/GWeather" = {
-        temperature-unit = "centigrade";
-      };
-      "org/gnome/gedit/preferences/editor" = {
-        editor-font = "PragmataPro Mono 12";
-        scheme = "solarized-light";
-        use-default-font = true;
-      };
-      "org/gnome/mutter/keybindings" ={
-        toggle-tiled-left = [ "<Shift><Super>h" ];
-        toggle-tiled-right = [ "<Shift><Super>l" ];
-      };
-      "org/gnome/shell" = {
-        always-show-log-out = true;
-        enabled-extensions = [
-          "remove-dropdown-arrows@mpdeimos.com"
-          "freon@UshakovVasilii_Github.yahoo.com"
-          "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
-          "activities-config@nls1729"
-        ];
-      };
-      "org/gnome/shell/keybindings" = {
-        switch-to-application-1 = [ "<Super>F1" ];
-        switch-to-application-2 = [ "<Super>F2" ];
-        switch-to-application-3 = [ "<Super>F3" ];
-        switch-to-application-4 = [ "<Super>F4" ];
-        switch-to-application-5 = [ "<Super>F5" ];
-        switch-to-application-6 = [ "<Super>F6" ];
-        switch-to-application-7 = [ "<Super>F7" ];
-        switch-to-application-8 = [ "<Super>F8" ];
-        switch-to-application-9 = [ "<Super>F9" ];
-      };
-      "org/gnome/shell/extensions/freon" = {
-        drive-utility = "none";
-        group-temperature = false;
-        group-voltage = false;
-        hot-sensors = [ "__max__" ];
-        panel-box-index = 3;
-        position-in-panel = "right";
-        show-decimal-value = false;
-        show-fan-rpm = false;
-        show-icon-on-panel = true;
-        show-voltage = false;
-        update-time = 30;
-      };
-      "org/gnome/shell/extensions/auto-move-windows" = {
-        application-list = [
-          "slack.desktop:5"
-          "telegramdesktop.desktop:5"
-          "spotify.desktop:8"
-          "steam.desktop:7"
-        ];
-      };
-      "org/gnome/shell/extensions/activities-config" = {
-        activities-config-button-icon-path = "${pkgs.numix-icon-theme-circle}/share/icons/Numix-Circle/48/apps/distributor-logo-nixos.svg";
-        activities-config-button-no-text = true;
-        activities-icon-padding = 0;
-        activities-icon-scale-factor = 1.4;
-        activities-text-padding = 0;
-        enable-conflict-detection = true;
-        maximized-window-effect = 0;
-        panel-background-color-hex-rgb = "#434343"; # Numix base bg color
-        panel-hide-rounded-corners = true;
-        show-overview = true;
-        transparent-panel = 0;
-      };
-    };
+    imports = [
+      ./dconf.nix
+    ];
+
     gtk = {
       enable = true;
       theme = {
@@ -174,15 +31,18 @@
         widget "vim-main-window.*GtkForm" style "vimfix"
       '';
     };
+
     xsession.pointerCursor = {
       package = pkgs.numix-cursor-theme;
       name = "Numix-Cursor";
       size = 48;
     };
+
     home.packages = with pkgs; [
       gnome3.gnome-tweak-tool
       gnome3.evince
       gnome3.dconf-editor
+      dconf2nix
       gnomeExtensions.remove-dropdown-arrows
       spotify
       slack-dark
@@ -195,6 +55,7 @@
       gimp
       inkscape
     ];
+
     programs = {
       # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,
       # lorri, keychain, lsd, neovim, noti, ssh, zathura
@@ -229,12 +90,15 @@
         };
       };
     };
+
     services = {
       # TODO: check out flameshot, systemd getmail, hound (!!!), redshift, screen-locker
       # spotifyd, syncthing, udiskie, unclutter, XSuspender
     };
+
     systemd.user.sessionVariables = {
     };
+
     # TODO: check out wayland configuration: sway
     xdg = {
       enable = true;
@@ -250,6 +114,7 @@
         videos = "\$HOME/video";
       };
     };
+
     xresources.properties = {
       "*.foreground" = "#dedede";
       "*.background" = "#444444";
