@@ -44,7 +44,17 @@
 
   services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
 
-  services.tlp.enable = true;
+  services.tlp = {
+    enable = true;
+    settings = {
+      USB_BLACKLIST = [
+        # Prevent Realtek USB NIC from autosuspend
+        "0bda:8153"
+        "046d:c52b"
+        # Prevent Logitech Unifying Receiver from autosuspend
+      ];
+    };
+  };
 
   services.thermald.enable = true;
 
@@ -52,8 +62,6 @@
     x11.enable = true;
     x11.display = ":1";
   };
-
-  powerManagement.powertop.enable = true;
 
   fonts = {
     enableDefaultFonts = true;
