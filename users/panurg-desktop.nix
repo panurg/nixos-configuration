@@ -9,6 +9,8 @@
     ];
   };
 
+  services.urxvtd.enable = true;
+
   home-manager.users.panurg = { pkgs, config, lib, ... }: {
     imports = [
       ./dconf.nix
