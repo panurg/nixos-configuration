@@ -40,7 +40,10 @@
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
+    permitRootLogin = "no";
   };
+
+  services.fail2ban.enable = true;
 
   services.smartd.enable = true;
   services.fstrim.enable = true;
