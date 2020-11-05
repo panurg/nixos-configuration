@@ -50,8 +50,11 @@
       USB_BLACKLIST = [
         # Prevent Realtek USB NIC from autosuspend
         "0bda:8153"
-        "046d:c52b"
         # Prevent Logitech Unifying Receiver from autosuspend
+        "046d:c52b"
+        # Prevent dock USB hubs from autosuspend
+        "2109:2813"
+        "1d6b:0002"
       ];
     };
   };
