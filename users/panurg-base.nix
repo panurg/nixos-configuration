@@ -64,6 +64,7 @@
           stash.showPatch = true;
           color.ui = "auto";
           core.untrackedCache = true;
+          pull.rebase = true;
         };
       };
       tmux = {
