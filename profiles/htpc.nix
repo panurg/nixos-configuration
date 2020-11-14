@@ -5,7 +5,7 @@
   services.xserver = {
     enable = true;
     desktopManager.kodi.enable = true;
-    displayManager.lightdm.autoLogin = {
+    displayManager.autoLogin = {
       enable = true;
       user = "tv";
     };
