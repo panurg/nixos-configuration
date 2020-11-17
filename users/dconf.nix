@@ -176,8 +176,8 @@
         "remove-dropdown-arrows@mpdeimos.com"
         "freon@UshakovVasilii_Github.yahoo.com"
         "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
-        "activities-config@nls1729"
         "pop-shell@system76.com"
+        "dynamic-panel-transparency@rockon999.github.io"
       ];
       favorite-apps = [
         "chrome-djeeobknjeechdoljfdmkojhlapmmpnd-Default.desktop"
@@ -190,20 +190,6 @@
       ];
     };
 
-    "org/gnome/shell/extensions/activities-config" = {
-      activities-config-button-icon-path = "${pkgs.numix-icon-theme-circle}/share/icons/Numix-Circle/48/apps/distributor-logo-nixos.svg";
-      activities-config-button-no-text = true;
-      activities-icon-padding = 0;
-      activities-icon-scale-factor = 1.4;
-      activities-text-padding = 0;
-      enable-conflict-detection = true;
-      maximized-window-effect = 0;
-      panel-background-color-hex-rgb = "#434343"; # Numix base bg color
-      panel-hide-rounded-corners = true;
-      show-overview = true;
-      transparent-panel = 0;
-    };
-
     "org/gnome/shell/extensions/auto-move-windows" = {
       application-list = [
         "slack.desktop:5"
@@ -211,6 +197,20 @@
         "spotify.desktop:8"
         "steam.desktop:7"
       ];
+    };
+
+    "dynamic-panel-transparency" = {
+      enable-background-color = true;
+      enable-opacity = true;
+      enable-text-color = false;
+      hide-corners = true;
+      maximized-opacity = 255;
+      panel-color = [ 43 43 43 ];
+      text-shadow = false;
+      transition-speed = 500;
+      transition-windows-touch = true;
+      transition-with-overview = true;
+      unmaximized-opacity = 0;
     };
 
     "org/gnome/shell/extensions/freon" = {
