@@ -52,7 +52,15 @@
 
   system.autoUpgrade.enable = true;
   # system.autoUpgrade.allowReboot = true;
-  nix.gc.automatic = true;
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 14d";
+  };
+  nix.autoOptimiseStore = true;
+  nix.optimise = {
+    automatic = false;
+    dates = [ "Fri 03:45" ];
+  };
 
   security.hideProcessInformation = true;
 
