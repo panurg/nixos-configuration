@@ -58,8 +58,9 @@
       libreoffice
       steam
       darktable
-      gimp
+      gimp-with-plugins
       inkscape
+      transmission-remote-gtk
     ];
 
     programs = {
@@ -69,6 +70,9 @@
       chromium = {
         enable = true;
         package = pkgs.chromium.override { enableVaapi = true; };
+        extensions = [
+          "gphhapmejobijbbhgpjhcjognlahblep" # GNOME Shell integration
+        ];
       };
       # dircolors.enable = true;
       # feh.enable = true;
