@@ -2,15 +2,15 @@
 
 stdenv.mkDerivation rec {
   pname = "pop-shell";
-  version = "2020-11-05";
+  version = "2020-11-13";
 
   uuid = "pop-shell@system76.com";
 
   src = fetchFromGitHub {
     owner = "pop-os";
     repo = "shell";
-    rev = "9f0976f1f9bf6e3d548fb74fddf86f3c15733311";
-    sha256 = "09fgfzdlrjwzqcqzr60jhpxjf37c4x0w28a0j6nsv9njwjmzggm0";
+    rev = "e1a9db9f948c092c3d47850370fc3bb69a581d11";
+    sha256 = "0yv8gjimiix9bzk7k1plbwfvn5kxc3z5ndqv9j5y42d4g7yk498y";
   };
 
   postPatch = ''
