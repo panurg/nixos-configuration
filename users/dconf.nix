@@ -253,6 +253,7 @@
       switch-to-application-9 = [ "<Super>F9" ];
       open-application-menu = [];
       toggle-message-tray = [ "<Super>v" ];
+      toggle-overview = [];
     };
   };
 }
