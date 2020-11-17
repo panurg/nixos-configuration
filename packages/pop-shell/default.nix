@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, glib, nodePackages }:
+{ stdenv, fetchFromGitHub, glib, nodePackages, pop-shell-shortcuts }:
 
 stdenv.mkDerivation rec {
   pname = "pop-shell";
@@ -12,6 +12,12 @@ stdenv.mkDerivation rec {
     rev = "9f0976f1f9bf6e3d548fb74fddf86f3c15733311";
     sha256 = "09fgfzdlrjwzqcqzr60jhpxjf37c4x0w28a0j6nsv9njwjmzggm0";
   };
+
+  postPatch = ''
+    substituteInPlace src/panel_settings.ts \
+      --replace "pop-shell-shortcuts" \
+                "${pop-shell-shortcuts}/bin/pop-shell-shortcuts"
+  '';
 
   nativeBuildInputs = [ glib nodePackages.typescript ];
 

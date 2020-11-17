@@ -41,7 +41,8 @@
     };
 
     home.packages = with pkgs; let
-      pop-shell = callPackage ../packages/pop-shell { };
+      pop-shell-shortcuts = callPackage ../packages/pop-shell-shortcuts { };
+      pop-shell = callPackage ../packages/pop-shell { inherit pop-shell-shortcuts; };
     in [
       gnome3.gnome-tweak-tool
       gnome3.evince
