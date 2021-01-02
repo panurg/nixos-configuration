@@ -205,7 +205,7 @@
       enable-text-color = false;
       hide-corners = true;
       maximized-opacity = 255;
-      panel-color = [ 43 43 43 ];
+      panel-color = [ 44 44 44 ];
       text-shadow = false;
       transition-speed = 500;
       transition-windows-touch = true;
