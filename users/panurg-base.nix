@@ -197,7 +197,7 @@
           " code folding
           set foldenable
           set foldmethod=syntax
-          set foldcolumn=2
+          set foldcolumn=0
           set foldlevelstart=99
 
           " nice command-line completions
@@ -209,7 +209,7 @@
           set wrap
           set linebreak
           set showbreak=↪\
-          set textwidth=80
+          set textwidth=99
           set colorcolumn=+1
 
           " highlight current line
