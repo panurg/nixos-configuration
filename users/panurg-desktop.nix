@@ -6,6 +6,8 @@
       # Allow spotify To sync local tracks from your filesystem with mobile
       # devices in the same network
       57621
+      # GS connect
+      1716
     ];
   };
 
@@ -63,6 +65,7 @@
       gnome3.dconf-editor
       dconf2nix
       gnomeExtensions.remove-dropdown-arrows
+      gnomeExtensions.gsconnect
       pop-shell
       spotify
       slack-dark
