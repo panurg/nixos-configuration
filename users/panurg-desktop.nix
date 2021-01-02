@@ -11,6 +11,8 @@
 
   services.urxvtd.enable = true;
 
+  services.dbus.packages = with pkgs; [ gnome3.pomodoro ];
+
   home-manager.users.panurg = { pkgs, config, lib, ... }: {
     imports = [
       ./dconf.nix
@@ -43,6 +45,18 @@
     home.packages = with pkgs; let
       pop-shell-shortcuts = callPackage ../packages/pop-shell-shortcuts { };
       pop-shell = callPackage ../packages/pop-shell { inherit pop-shell-shortcuts; };
+      pomodoro = gnome3.pomodoro.overrideAttrs (oldAttrs: rec{
+        patches = [
+          ../packages/pomodoro/fix-paths.patch
+        ];
+        postPatch = ''
+          substituteInPlace plugins/gnome/extension/utils.js \
+            --replace "ExtensionSystem.logExtensionError(Extension.metadata.uuid, " \
+                      "log(\"MYPATCH_ERROR:\" + "
+          substituteInPlace lib/settings.vala \
+            --subst-var-by gschemasCompiled ${glib.makeSchemaPath "$out" "${oldAttrs.pname}-${oldAttrs.version}"}
+        '';
+      });
     in [
       gnome3.gnome-tweak-tool
       gnome3.evince
@@ -54,7 +68,7 @@
       slack-dark
       tdesktop
       meld
-      gnome3.pomodoro
+      pomodoro
       libreoffice
       steam
       darktable
