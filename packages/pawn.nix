@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     url = "https://www.compuphase.com/${pname}/${pname}-${version}.zip";
     sha256 = "1qj2n0xql2bmgvng7q7xf7113bgi2kqgaq9jp0dmys3nc3vm123f";
+    stripRoot = false;
   };
   buildInputs = with pkgs; [ cmake gcc_multi ];
   enableParallelBuilding = true;
