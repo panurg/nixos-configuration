@@ -30,7 +30,6 @@
       file
       fd
       nodejs
-      clang-tools
     ];
     programs = {
       # TODO: check out autorandr or grobi, broot, beets, browserpass or pass,

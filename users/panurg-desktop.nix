@@ -78,6 +78,9 @@
       gimp-with-plugins
       inkscape
       transmission-remote-gtk
+      hunspell
+      hunspellDicts.en_US-large
+      hunspellDicts.ru_RU
     ];
 
     programs = {
@@ -115,6 +118,56 @@
           italicFont = "xft:PragmataPro Mono:style=italic:size=12";
           boldItalicFont = "xft:PragmataPro Mono:style=bold italic:size=12";
         };
+      };
+      emacs = {
+        enable = true;
+        extraPackages = epkgs: with epkgs; [
+          use-package
+          all-the-icons
+          doom-themes
+          evil
+          evil-collection
+          nix-mode
+          nix-sandbox
+          # company-nixos-options
+          # helm-nixos-options
+          # nixpkgs-fmt
+          evil-commentary
+          magit
+          evil-magit # part of evil-collection at 2020-11-24
+          evil-exchange
+          evil-goggles
+          evil-surround
+          diff-hl
+          helm
+          projectile
+          helm-projectile
+          lsp-mode
+          lsp-ui
+          lsp-treemacs
+          company
+          company-flx
+          company-posframe
+          helpful
+          hungry-delete
+          which-key
+          treemacs
+          treemacs-all-the-icons
+          treemacs-evil
+          treemacs-magit
+          treemacs-projectile
+          pkgs.python3 # treemacs needs python3
+          rainbow-delimiters
+          emacs-libvterm
+          dired-single
+          all-the-icons-dired
+          pdf-tools
+          saveplace-pdf-view
+          flyspell-lazy
+          highlight-numbers
+          highlight-escape-sequences
+          telephone-line
+        ];
       };
     };
 
