@@ -55,12 +55,10 @@
   nix.gc = {
     automatic = true;
     options = "--delete-older-than 14d";
+    dates = "3:45";
   };
   nix.autoOptimiseStore = true;
-  nix.optimise = {
-    automatic = false;
-    dates = [ "Fri 03:45" ];
-  };
+  nix.optimise.automatic = false;
 
   security.hideProcessInformation = true;
 
