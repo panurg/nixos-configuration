@@ -66,6 +66,7 @@
       dconf2nix
       gnomeExtensions.remove-dropdown-arrows
       gnomeExtensions.gsconnect
+      gnomeExtensions.sound-output-device-chooser
       pop-shell
       spotify
       slack-dark

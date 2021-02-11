@@ -178,6 +178,7 @@
         "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
         "pop-shell@system76.com"
         "dynamic-panel-transparency@rockon999.github.io"
+        "sound-output-device-chooser@kgshank.net"
       ];
       favorite-apps = [
         "chrome-djeeobknjeechdoljfdmkojhlapmmpnd-Default.desktop"
@@ -228,7 +229,7 @@
     };
 
     "org/gnome/shell/extensions/pop-shell" = {
-      active-hint = true;
+      active-hint = false;
       gap-inner = mkUint32(6);
       gap-outer = mkUint32(6);
       show-title = false;
@@ -239,6 +240,13 @@
       pop-monitor-left = [ "<Super><Shift><Control>h" ];
       pop-monitor-right = [ "<Super><Shift><Control>l" ];
       hint-color-rgba = mkTuple [240 84 76 1];
+    };
+
+    "org/gnome/shell/extensions/sound-output-device-chooser" = {
+      hide-menu-icons = false;
+      hide-on-single-device = true;
+      show-input-devices = true;
+      show-input-slider = true;
     };
 
     "org/gnome/shell/keybindings" = {
