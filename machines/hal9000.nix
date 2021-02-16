@@ -77,7 +77,14 @@
     { device = "/dev/disk/by-uuid/cc822852-560d-4ccb-9487-794ee9e40c93"; }
   ];
 
-  nix.maxJobs = lib.mkDefault 4;
+  nix = {
+    maxJobs = lib.mkDefault 4;
+    extraOptions = ''
+      keep-outputs = true
+      gc-keep-derivations = true
+    '';
+  };
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";

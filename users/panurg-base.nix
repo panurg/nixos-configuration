@@ -50,7 +50,10 @@
           } + "/gruvbox (Dark) (Soft).tmTheme");
         };
       };
-      direnv.enable = true;
+      direnv = {
+        enable = true;
+        enableNixDirenvIntegration = true;
+      };
       command-not-found.enable = true;
       # dircolors.enable = true;
       fzf.enable = true;

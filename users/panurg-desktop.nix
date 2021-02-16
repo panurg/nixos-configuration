@@ -129,7 +129,6 @@
           evil
           evil-collection
           nix-mode
-          nix-sandbox
           # company-nixos-options
           # helm-nixos-options
           # nixpkgs-fmt
@@ -168,6 +167,7 @@
           highlight-numbers
           highlight-escape-sequences
           telephone-line
+          direnv
         ];
       };
     };
