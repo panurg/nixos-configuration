@@ -130,7 +130,6 @@
           evil-collection
           nix-mode
           # company-nixos-options
-          # helm-nixos-options
           # nixpkgs-fmt
           evil-commentary
           magit
@@ -139,9 +138,7 @@
           evil-goggles
           evil-surround
           diff-hl
-          helm
           projectile
-          helm-projectile
           lsp-mode
           lsp-ui
           lsp-treemacs
@@ -168,6 +165,13 @@
           highlight-escape-sequences
           telephone-line
           direnv
+          counsel
+          counsel-projectile
+          ivy-rich
+          all-the-icons-ivy-rich
+          ivy-hydra
+          lsp-ivy
+          flx
         ];
       };
     };
