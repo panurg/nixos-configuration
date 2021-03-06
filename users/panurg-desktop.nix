@@ -153,7 +153,7 @@
           treemacs-magit
           treemacs-projectile
           pkgs.python3 # treemacs needs python3
-          rainbow-delimiters
+          highlight-parentheses
           emacs-libvterm
           dired-single
           all-the-icons-dired
