@@ -143,7 +143,6 @@
           lsp-ui
           lsp-treemacs
           company
-          company-flx
           company-posframe
           helpful
           hungry-delete
@@ -171,7 +170,9 @@
           all-the-icons-ivy-rich
           ivy-hydra
           lsp-ivy
-          flx
+          prescient
+          ivy-prescient
+          company-prescient
         ];
       };
     };
