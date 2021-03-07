@@ -160,6 +160,8 @@
           pdf-tools
           saveplace-pdf-view
           flyspell-lazy
+          flyspell-correct
+          flyspell-correct-ivy
           highlight-numbers
           highlight-escape-sequences
           telephone-line
