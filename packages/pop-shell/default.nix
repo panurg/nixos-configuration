@@ -1,17 +1,21 @@
-{ stdenv, fetchFromGitHub, glib, nodePackages, pop-shell-shortcuts }:
+{ stdenv, fetchFromGitHub, glib, nodePackages, pop-shell-shortcuts, gjs }:
 
 stdenv.mkDerivation rec {
   pname = "pop-shell";
-  version = "2020-11-13";
+  version = "2021-03-16";
 
   uuid = "pop-shell@system76.com";
 
   src = fetchFromGitHub {
     owner = "pop-os";
     repo = "shell";
-    rev = "e1a9db9f948c092c3d47850370fc3bb69a581d11";
-    sha256 = "0yv8gjimiix9bzk7k1plbwfvn5kxc3z5ndqv9j5y42d4g7yk498y";
+    rev = "77650a9aafa2f7adc328424e36dc91705411feb4";
+    sha256 = "0dff8gl83kx2qzzybk9hxbszv9p8qw8j40qirvfbx6mly7sqknng";
   };
+
+  patches = [
+    ./fix-gjs.patch
+  ];
 
   postPatch = ''
     substituteInPlace src/panel_settings.ts \
@@ -19,7 +23,12 @@ stdenv.mkDerivation rec {
                 "${pop-shell-shortcuts}/bin/pop-shell-shortcuts"
   '';
 
-  nativeBuildInputs = [ glib nodePackages.typescript ];
+  nativeBuildInputs = [ glib nodePackages.typescript gjs ];
 
-  makeFlags = [ "INSTALLBASE=$(out)/share/gnome-shell/extensions" ];
+  makeFlags = [ "INSTALLBASE=$(out)/share/gnome-shell/extensions PLUGIN_BASE=$(out)/share/pop-shell/launcher SCRIPTS_BASE=$(out)/share/pop-shell/scripts" ];
+
+  postInstall = ''
+    chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/floating_exceptions/main.js
+    chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/color_dialog/main.js
+  '';
 }
