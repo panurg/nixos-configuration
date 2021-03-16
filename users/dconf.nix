@@ -145,7 +145,7 @@
 
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
-      night-light-temperature = mkUint32(4360);
+      night-light-temperature = mkUint32(3700);
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
