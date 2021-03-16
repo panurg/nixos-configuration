@@ -82,6 +82,7 @@
       hunspell
       hunspellDicts.en_US-large
       hunspellDicts.ru_RU
+      brave
     ];
 
     programs = {
